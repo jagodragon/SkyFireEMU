@@ -33,9 +33,9 @@ SET @GOSSIP_MENU_VALIS_EXPLANATION := 10401; -- From Aokromes Sniffs
 SET @GOSSIP_TEXT_VALIS_MOUNTED     := 14438;
 SET @GOSSIP_TEXT_VALIS_EXPLANATION := 14439;
 SET @SPELL_CREDIT_VALIS            := 64115;
-
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry`IN(@NPC_JAERAN_LOCKWOOD,@NPC_RUGAN_STEELBELLY,@NPC_VALIS_WINDCHASER);
 UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry`IN(@NPC_JAERAN_LOCKWOOD,@NPC_RUGAN_STEELBELLY,@NPC_VALIS_WINDCHASER);
-DELETE FROM `smart_scripts` WHERE (`entryorguid`IN(@NPC_JAERAN_LOCKWOOD,@NPC_RUGAN_STEELBELLY) AND `source_type`=0);
+DELETE FROM `smart_scripts` WHERE (`entryorguid`IN(@NPC_JAERAN_LOCKWOOD,@NPC_RUGAN_STEELBELLY,@NPC_VALIS_WINDCHASER) AND `source_type`=0);
 INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES 
 (@NPC_JAERAN_LOCKWOOD,0,0,0,64,0,100,0,0,0,0,0,98,@GOSSIP_MENU_JERAN_MOUNTED,@GOSSIP_TEXT_JERAN_MOUNTED,0,0,0,0,7,0,0,0,0,0,0,0,'Jeran Lockwood - Send different gossip when mounted (Requires conditions)'),
 (@NPC_JAERAN_LOCKWOOD,0,1,3,62,0,100,0,@GOSSIP_MENU_JERAN_MOUNTED,0,0,0,1,0,0,0,0,0,0,7,0,0,0,0,0,0,0,'Jeran Lockwood - Send text when option clicked'),
@@ -115,6 +115,7 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 (@NPC_VALIS_WINDCHASER,0,0,'Use Shield-Breaker on a Ranged Target$B|TInterface\\Icons\\ability_warrior_shieldbreak.blp:32|t$BThen use Shield-Breaker while the target is defenseless$B|TInterface\\Icons\\ability_warrior_shieldbreak.blp:32|t',42,0,0,0,0,0,'Argent Tournament - Ranged Tutorial');
 
 -- Training Dummies Part
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN (33272,33229,33243);
 UPDATE `creature_template` SET `ScriptName` = 'npc_tournament_training_dummy' WHERE `entry` IN (33272,33229,33243);
 
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry`=62709;
