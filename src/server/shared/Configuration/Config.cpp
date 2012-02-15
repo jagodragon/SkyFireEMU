@@ -25,36 +25,36 @@ namespace ConfigMgr
 {
 namespace
 {
-    typedef ACE_Thread_Mutex LockType;
-    typedef ACE_Guard<LockType> GuardType;
+typedef ACE_Thread_Mutex LockType;
+typedef ACE_Guard<LockType> GuardType;
 
-    std::string _filename;
-    ACE_Auto_Ptr<ACE_Configuration_Heap> _config;
-    LockType m_configLock;
+std::string _filename;
+ACE_Auto_Ptr<ACE_Configuration_Heap> _config;
+LockType m_configLock;
 
-    // Defined here as it must not be exposed to end-users.
-    bool GetValueHelper(const char* name, ACE_TString &result)
-    {
-        GuardType guard(m_configLock);
+// Defined here as it must not be exposed to end-users.
+bool GetValueHelper(const char* name, ACE_TString &result)
+{
+    GuardType guard(m_configLock);
 
-        if (_config.get() == 0)
-            return false;
-
-        ACE_TString section_name;
-        ACE_Configuration_Section_Key section_key;
-        const ACE_Configuration_Section_Key &root_key = _config->root_section();
-
-        int i = 0;
-        while (_config->enumerate_sections(root_key, i, section_name) == 0)
-        {
-            _config->open_section(root_key, section_name.c_str(), 0, section_key);
-            if (_config->get_string_value(section_key, name, result) == 0)
-                return true;
-            ++i;
-        }
-
+    if (_config.get() == 0)
         return false;
+
+    ACE_TString section_name;
+    ACE_Configuration_Section_Key section_key;
+    const ACE_Configuration_Section_Key &root_key = _config->root_section();
+
+    int i = 0;
+    while (_config->enumerate_sections(root_key, i, section_name) == 0)
+    {
+        _config->open_section(root_key, section_name.c_str(), 0, section_key);
+        if (_config->get_string_value(section_key, name, result) == 0)
+            return true;
+        ++i;
     }
+
+    return false;
+}
 }
 
 bool Load(const char* file)
@@ -89,7 +89,7 @@ bool GetBoolDefault(const char* name, bool def)
         return def;
 
     return (val == "true" || val == "TRUE" || val == "yes" || val == "YES" ||
-        val == "1");
+            val == "1");
 };
 
 int GetIntDefault(const char* name, int def)

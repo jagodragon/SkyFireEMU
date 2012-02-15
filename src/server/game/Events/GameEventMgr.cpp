@@ -35,37 +35,37 @@ bool GameEventMgr::CheckOneGameEvent(uint16 entry) const
 {
     switch (mGameEvent[entry].state)
     {
-        default:
-        case GAMEEVENT_NORMAL:
-        {
-            time_t currenttime = time(NULL);
-            // Get the event information
-            return mGameEvent[entry].start < currenttime
-                && currenttime < mGameEvent[entry].end
-                && (currenttime - mGameEvent[entry].start) % (mGameEvent[entry].occurence * MINUTE) < mGameEvent[entry].length * MINUTE;
-        }
-        // if the state is conditions or nextphase, then the event should be active
-        case GAMEEVENT_WORLD_CONDITIONS:
-        case GAMEEVENT_WORLD_NEXTPHASE:
-            return true;
+    default:
+    case GAMEEVENT_NORMAL:
+    {
+        time_t currenttime = time(NULL);
+        // Get the event information
+        return mGameEvent[entry].start < currenttime
+               && currenttime < mGameEvent[entry].end
+               && (currenttime - mGameEvent[entry].start) % (mGameEvent[entry].occurence * MINUTE) < mGameEvent[entry].length * MINUTE;
+    }
+    // if the state is conditions or nextphase, then the event should be active
+    case GAMEEVENT_WORLD_CONDITIONS:
+    case GAMEEVENT_WORLD_NEXTPHASE:
+        return true;
         // finished world events are inactive
-        case GAMEEVENT_WORLD_FINISHED:
-        case GAMEEVENT_INTERNAL:
-            return false;
+    case GAMEEVENT_WORLD_FINISHED:
+    case GAMEEVENT_INTERNAL:
+        return false;
         // if inactive world event, check the prerequisite events
-        case GAMEEVENT_WORLD_INACTIVE:
+    case GAMEEVENT_WORLD_INACTIVE:
+    {
+        time_t currenttime = time(NULL);
+        for (std::set<uint16>::const_iterator itr = mGameEvent[entry].prerequisite_events.begin(); itr != mGameEvent[entry].prerequisite_events.end(); ++itr)
         {
-            time_t currenttime = time(NULL);
-            for (std::set<uint16>::const_iterator itr = mGameEvent[entry].prerequisite_events.begin(); itr != mGameEvent[entry].prerequisite_events.end(); ++itr)
-            {
-                if ((mGameEvent[*itr].state != GAMEEVENT_WORLD_NEXTPHASE && mGameEvent[*itr].state != GAMEEVENT_WORLD_FINISHED) ||   // if prereq not in nextphase or finished state, then can't start this one
+            if ((mGameEvent[*itr].state != GAMEEVENT_WORLD_NEXTPHASE && mGameEvent[*itr].state != GAMEEVENT_WORLD_FINISHED) ||   // if prereq not in nextphase or finished state, then can't start this one
                     mGameEvent[*itr].nextstart > currenttime)               // if not in nextphase state for long enough, can't start this one
-                    return false;
-            }
-            // all prerequisite events are met
-            // but if there are no prerequisites, this can be only activated through gm command
-            return !(mGameEvent[entry].prerequisite_events.empty());
+                return false;
         }
+        // all prerequisite events are met
+        // but if there are no prerequisites, this can be only activated through gm command
+        return !(mGameEvent[entry].prerequisite_events.empty());
+    }
     }
 }
 
@@ -368,7 +368,7 @@ void GameEventMgr::LoadFromDB()
 
         //                                                       1                2
         QueryResult result = WorldDatabase.Query("SELECT creature.guid, game_event_creature.eventEntry FROM creature"
-                                                 " JOIN game_event_creature ON creature.guid = game_event_creature.guid");
+                             " JOIN game_event_creature ON creature.guid = game_event_creature.guid");
 
         if (!result)
         {
@@ -411,7 +411,7 @@ void GameEventMgr::LoadFromDB()
 
         //                                                      1                2
         QueryResult result = WorldDatabase.Query("SELECT gameobject.guid, game_event_gameobject.eventEntry FROM gameobject"
-                                                 " JOIN game_event_gameobject ON gameobject.guid=game_event_gameobject.guid");
+                             " JOIN game_event_gameobject ON gameobject.guid=game_event_gameobject.guid");
 
         if (!result)
         {
@@ -454,7 +454,7 @@ void GameEventMgr::LoadFromDB()
 
         //                                                       0                     1                              2                               3
         QueryResult result = WorldDatabase.Query("SELECT creature.guid, game_event_model_equip.eventEntry, game_event_model_equip.modelid, game_event_model_equip.equipment_id "
-                                                 "FROM creature JOIN game_event_model_equip ON creature.guid=game_event_model_equip.guid");
+                             "FROM creature JOIN game_event_model_equip ON creature.guid=game_event_model_equip.guid");
 
         if (!result)
         {
@@ -914,7 +914,7 @@ void GameEventMgr::LoadFromDB()
 
         //                                                       1                       2
         QueryResult result = WorldDatabase.Query("SELECT pool_template.entry, game_event_pool.eventEntry FROM pool_template"
-                                                 " JOIN game_event_pool ON pool_template.entry = game_event_pool.pool_entry");
+                             " JOIN game_event_pool ON pool_template.entry = game_event_pool.pool_entry");
 
         if (!result)
         {
@@ -966,8 +966,8 @@ uint32 GameEventMgr::GetNPCFlag(Creature* cr)
     for (ActiveEvents::iterator e_itr = m_ActiveEvents.begin(); e_itr != m_ActiveEvents.end(); ++e_itr)
     {
         for (NPCFlagList::iterator itr = mGameEventNPCFlags[*e_itr].begin();
-            itr != mGameEventNPCFlags[*e_itr].end();
-            ++ itr)
+                itr != mGameEventNPCFlags[*e_itr].end();
+                ++ itr)
             if (itr->first == guid)
                 mask |= itr->second;
     }
@@ -1132,11 +1132,11 @@ void GameEventMgr::ApplyNewEvent(uint16 event_id)
 {
     switch (sWorld->getIntConfig(CONFIG_EVENT_ANNOUNCE))
     {
-        case 0:                                             // disable
-            break;
-        case 1:                                             // announce events
-            sWorld->SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
-            break;
+    case 0:                                             // disable
+        break;
+    case 1:                                             // announce events
+        sWorld->SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
+        break;
     }
 
     sLog->outDetail("GameEvent %u \"%s\" started.", event_id, mGameEvent[event_id].description.c_str());
@@ -1212,7 +1212,7 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
     if (internal_event_id < 0 || internal_event_id >= int32(mGameEventCreatureGuids.size()))
     {
         sLog->outError("GameEventMgr::GameEventSpawn attempt access to out of range mGameEventCreatureGuids element %i (size: " SIZEFMTD ")",
-            internal_event_id, mGameEventCreatureGuids.size());
+                       internal_event_id, mGameEventCreatureGuids.size());
         return;
     }
 
@@ -1239,7 +1239,7 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
     if (internal_event_id < 0 || internal_event_id >= int32(mGameEventGameobjectGuids.size()))
     {
         sLog->outError("GameEventMgr::GameEventSpawn attempt access to out of range mGameEventGameobjectGuids element %i (size: " SIZEFMTD ")",
-            internal_event_id, mGameEventGameobjectGuids.size());
+                       internal_event_id, mGameEventGameobjectGuids.size());
         return;
     }
 
@@ -1272,12 +1272,14 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
     if (internal_event_id < 0 || internal_event_id >= int32(mGameEventPoolIds.size()))
     {
         sLog->outError("GameEventMgr::GameEventSpawn attempt access to out of range mGameEventPoolIds element %u (size: " SIZEFMTD ")",
-            internal_event_id, mGameEventPoolIds.size());
+                       internal_event_id, mGameEventPoolIds.size());
         return;
     }
 
     for (IdList::iterator itr = mGameEventPoolIds[internal_event_id].begin(); itr != mGameEventPoolIds[internal_event_id].end(); ++itr)
+    {
         sPoolMgr->SpawnPool(*itr);
+    }
 }
 
 void GameEventMgr::GameEventUnspawn(int16 event_id)
@@ -1287,7 +1289,7 @@ void GameEventMgr::GameEventUnspawn(int16 event_id)
     if (internal_event_id < 0 || internal_event_id >= int32(mGameEventCreatureGuids.size()))
     {
         sLog->outError("GameEventMgr::GameEventUnspawn attempt access to out of range mGameEventCreatureGuids element %i (size: " SIZEFMTD ")",
-            internal_event_id, mGameEventCreatureGuids.size());
+                       internal_event_id, mGameEventCreatureGuids.size());
         return;
     }
 
@@ -1309,7 +1311,7 @@ void GameEventMgr::GameEventUnspawn(int16 event_id)
     if (internal_event_id < 0 || internal_event_id >= int32(mGameEventGameobjectGuids.size()))
     {
         sLog->outError("GameEventMgr::GameEventUnspawn attempt access to out of range mGameEventGameobjectGuids element %i (size: " SIZEFMTD ")",
-            internal_event_id, mGameEventGameobjectGuids.size());
+                       internal_event_id, mGameEventGameobjectGuids.size());
         return;
     }
 
@@ -1402,7 +1404,7 @@ void GameEventMgr::ChangeEquipOrModel(int16 event_id, bool activate)
             }
         }
         // now last step: put in data
-                                                            // just to have write access to it
+        // just to have write access to it
         CreatureData& data2 = sObjectMgr->NewOrExistCreatureData(itr->first);
         if (activate)
         {
@@ -1423,8 +1425,8 @@ bool GameEventMgr::hasCreatureQuestActiveEventExcept(uint32 quest_id, uint16 eve
     {
         if ((*e_itr) != event_id)
             for (QuestRelList::iterator itr = mGameEventCreatureQuests[*e_itr].begin();
-                itr != mGameEventCreatureQuests[*e_itr].end();
-                ++ itr)
+                    itr != mGameEventCreatureQuests[*e_itr].end();
+                    ++ itr)
                 if (itr->second == quest_id)
                     return true;
     }
@@ -1437,8 +1439,8 @@ bool GameEventMgr::hasGameObjectQuestActiveEventExcept(uint32 quest_id, uint16 e
     {
         if ((*e_itr) != event_id)
             for (QuestRelList::iterator itr = mGameEventGameObjectQuests[*e_itr].begin();
-                itr != mGameEventGameObjectQuests[*e_itr].end();
-                ++ itr)
+                    itr != mGameEventGameObjectQuests[*e_itr].end();
+                    ++ itr)
                 if (itr->second == quest_id)
                     return true;
     }
@@ -1452,8 +1454,8 @@ bool GameEventMgr::hasCreatureActiveEventExcept(uint32 creature_id, uint16 event
         {
             int32 internal_event_id = mGameEvent.size() + (*e_itr) - 1;
             for (GuidList::iterator itr = mGameEventCreatureGuids[internal_event_id].begin();
-                itr != mGameEventCreatureGuids[internal_event_id].end();
-                ++ itr)
+                    itr != mGameEventCreatureGuids[internal_event_id].end();
+                    ++ itr)
                 if (*itr == creature_id)
                     return true;
         }
@@ -1468,8 +1470,8 @@ bool GameEventMgr::hasGameObjectActiveEventExcept(uint32 go_id, uint16 event_id)
         {
             int32 internal_event_id = mGameEvent.size() + (*e_itr) - 1;
             for (GuidList::iterator itr = mGameEventGameobjectGuids[internal_event_id].begin();
-                itr != mGameEventGameobjectGuids[internal_event_id].end();
-                ++ itr)
+                    itr != mGameEventGameobjectGuids[internal_event_id].end();
+                    ++ itr)
                 if (*itr == go_id)
                     return true;
         }

@@ -27,37 +27,38 @@
 #include "BattlegroundMgr.h"
 #include "Item.h"
 #include "AuctionHouseMgr.h"
+#include "AuctionHouseBot.h"
 
 MailSender::MailSender(Object* sender, MailStationery stationery) : m_stationery(stationery)
 {
     switch (sender->GetTypeId())
     {
-        case TYPEID_UNIT:
-            m_messageType = MAIL_CREATURE;
-            m_senderId = sender->GetEntry();
-            break;
-        case TYPEID_GAMEOBJECT:
-            m_messageType = MAIL_GAMEOBJECT;
-            m_senderId = sender->GetEntry();
-            break;
-        case TYPEID_ITEM:
-            m_messageType = MAIL_ITEM;
-            m_senderId = sender->GetEntry();
-            break;
-        case TYPEID_PLAYER:
-            m_messageType = MAIL_NORMAL;
-            m_senderId = sender->GetGUIDLow();
-            break;
-        default:
-            m_messageType = MAIL_NORMAL;
-            m_senderId = 0;                                 // will show mail from not existed player
-            sLog->outError("MailSender::MailSender - Mail have unexpected sender typeid (%u)", sender->GetTypeId());
-            break;
+    case TYPEID_UNIT:
+        m_messageType = MAIL_CREATURE;
+        m_senderId = sender->GetEntry();
+        break;
+    case TYPEID_GAMEOBJECT:
+        m_messageType = MAIL_GAMEOBJECT;
+        m_senderId = sender->GetEntry();
+        break;
+    case TYPEID_ITEM:
+        m_messageType = MAIL_ITEM;
+        m_senderId = sender->GetEntry();
+        break;
+    case TYPEID_PLAYER:
+        m_messageType = MAIL_NORMAL;
+        m_senderId = sender->GetGUIDLow();
+        break;
+    default:
+        m_messageType = MAIL_NORMAL;
+        m_senderId = 0;                                 // will show mail from not existed player
+        sLog->outError("MailSender::MailSender - Mail have unexpected sender typeid (%u)", sender->GetTypeId());
+        break;
     }
 }
 
 MailSender::MailSender(AuctionEntry* sender)
-    : m_messageType(MAIL_AUCTION), m_senderId(sender->GetHouseId()), m_stationery(MAIL_STATIONERY_AUCTION)
+        : m_messageType(MAIL_AUCTION), m_senderId(sender->GetHouseId()), m_stationery(MAIL_STATIONERY_AUCTION)
 {
 }
 
@@ -79,7 +80,8 @@ MailReceiver::MailReceiver(Player* receiver, uint64 receiver_lowguid) : m_receiv
 
 MailDraft& MailDraft::AddItem(Item* item)
 {
-    _items[item->GetGUIDLow()] = item; return *this;
+    _items[item->GetGUIDLow()] = item;
+    return *this;
 }
 
 void MailDraft::prepareItems(Player* receiver, SQLTransaction& trans)
@@ -179,6 +181,13 @@ void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, 
 
     uint32 mailId = sObjectMgr->GenerateMailID();
 
+    if (receiver.GetPlayerGUIDLow() == NULL)
+    {
+        if (sender.GetMailMessageType() == MAIL_AUCTION)        // auction mail with items
+            deleteIncludedItems(trans, true);
+        return;
+    } 
+
     time_t deliver_time = time(NULL) + deliver_delay;
 
     //expire time if COD 3 days, if no COD 30 days, if auction sale pending 1 hour
@@ -190,7 +199,7 @@ void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, 
     // mail from battlemaster (rewardmarks) should last only one day
     else if (sender.GetMailMessageType() == MAIL_CREATURE && sBattlegroundMgr->GetBattleMasterBG(sender.GetSenderId()) != BATTLEGROUND_TYPE_NONE)
         expire_delay = DAY;
-     // default case: expire time if COD 3 days, if no COD 30 days (or 90 days if sender is a game master)
+    // default case: expire time if COD 3 days, if no COD 30 days (or 90 days if sender is a game master)
     else
         if (m_COD)
             expire_delay = 3 * DAY;

@@ -22,6 +22,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
+#include "AuctionHouseBot.h
 #include "AuctionHouseMgr.h"
 #include "Log.h"
 #include "Opcodes.h"
@@ -154,12 +155,12 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
     // client understand only 3 auction time
     switch (etime)
     {
-        case 1 * MIN_AUCTION_TIME:
-        case 2 * MIN_AUCTION_TIME:
-        case 4 * MIN_AUCTION_TIME:
-            break;
-        default:
-            return;
+    case 1 * MIN_AUCTION_TIME:
+    case 2 * MIN_AUCTION_TIME:
+    case 4 * MIN_AUCTION_TIME:
+        break;
+    default:
+        return;
     }
 
     // remove fake death
@@ -212,7 +213,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
     if (AccountMgr::IsGMAccount(GetSecurity()) && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
     {
         sLog->outCommand(GetAccountId(), "GM %s (Account: %u) create auction: %s (Entry: %u Count: %u)",
-            GetPlayerName(), GetAccountId(), it->GetTemplate()->Name1.c_str(), it->GetEntry(), count);
+                         GetPlayerName(), GetAccountId(), it->GetTemplate()->Name1.c_str(), it->GetEntry(), count);
     }
 
     player->ModifyMoney(-int32(deposit));
@@ -221,7 +222,8 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 
     AuctionEntry* AH                = new AuctionEntry;
     AH->Id = sObjectMgr->GenerateAuctionID();
-    if (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_AUCTION))
+    sLog->outString("Is it true or false [%u]", sAuctionBotConfig.getConfig(CONFIG_BOOL_AHBOT_OVERRIDE_SIDE));
++    if (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_AUCTION) && sAuctionBotConfig.getConfig(CONFIG_BOOL_AHBOT_OVERRIDE_SIDE) == false)
         AH->auctioneer              = 23442;
     else
         AH->auctioneer              = GUID_LOPART(auctioneer);
@@ -310,7 +312,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 
     // price too low for next bid if not buyout
     if ((price < auction->buyout || auction->buyout == 0) &&
-        price < auction->bid + auction->GetAuctionOutBid())
+            price < auction->bid + auction->GetAuctionOutBid())
     {
         //auction has already higher bid, client tests it!
         return;
@@ -429,8 +431,8 @@ void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
 
             // item will deleted or added to received mail list
             MailDraft(msgAuctionCanceledOwner.str(), "")    // TODO: fix body
-                .AddItem(pItem)
-                .SendMailTo(trans, player, auction, MAIL_CHECK_MASK_COPIED);
+            .AddItem(pItem)
+            .SendMailTo(trans, player, auction, MAIL_CHECK_MASK_COPIED);
         }
         else
         {
@@ -613,9 +615,9 @@ void WorldSession::HandleAuctionListItems(WorldPacket & recv_data)
     wstrToLower(wsearchedname);
 
     auctionHouse->BuildListAuctionItems(data, _player,
-        wsearchedname, listfrom, levelmin, levelmax, usable,
-        auctionSlotID, auctionMainCategory, auctionSubCategory, quality,
-        count, totalcount);
+                                        wsearchedname, listfrom, levelmin, levelmax, usable,
+                                        auctionSlotID, auctionMainCategory, auctionSubCategory, quality,
+                                        count, totalcount);
 
     data.put<uint32>(0, count);
     data << (uint32) totalcount;

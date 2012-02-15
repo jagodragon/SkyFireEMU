@@ -1,20 +1,23 @@
 /*
- * Copyright (C) 2010-2012 Project SkyFire <http://www.projectskyfire.org/>
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2012 MaNGOS <http://getmangos.com/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef __TRINITY_LANGUAGE_H
@@ -43,8 +46,8 @@ enum SkyFireStrings
     LANG_GMS_ON_SRV                     = 16,
     LANG_GMS_NOT_LOGGED                 = 17,
     LANG_YOU_IN_FLIGHT                  = 18,
-    LANG_UPDATE_DIFF                    = 19,
-    LANG_SHUTDOWN_TIMELEFT              = 20,
+    //LANG_YOU_IN_BATTLEGROUND            = 19, not used
+    //LANG_TARGET_IN_FLIGHT               = 20, not used
     LANG_CHAR_IN_FLIGHT                 = 21,
     LANG_CHAR_NON_MOUNTED               = 22,
     LANG_YOU_IN_COMBAT                  = 23,
@@ -268,7 +271,7 @@ enum SkyFireStrings
     LANG_COMMAND_ADDVENDORITEMITEMS     = 280,
     LANG_COMMAND_KICKSELF               = 281,
     LANG_COMMAND_KICKMESSAGE            = 282,
-    LANG_COMMAND_DISABLE_CHAT_DELAYED   = 283,
+    //                                    283, not used
     LANG_COMMAND_WHISPERACCEPTING       = 284,
     LANG_COMMAND_WHISPERON              = 285,
     LANG_COMMAND_WHISPEROFF             = 286,
@@ -400,7 +403,7 @@ enum SkyFireStrings
     LANG_COMMAND_GRAVEYARDALRLINKED     = 450,
     LANG_COMMAND_GRAVEYARDLINKED        = 451,
     LANG_COMMAND_GRAVEYARDWRONGZONE     = 452,
-    //                                  = 453, see LANG_PINFO_BAN
+    //                                  = 453,
     LANG_COMMAND_GRAVEYARDERROR         = 454,
     LANG_COMMAND_GRAVEYARD_NOTEAM       = 455,
     LANG_COMMAND_GRAVEYARD_ANY          = 456,
@@ -493,9 +496,9 @@ enum SkyFireStrings
     LANG_MOVEGENS_WAYPOINT              = 529,
     LANG_MOVEGENS_ANIMAL_RANDOM         = 530,
     LANG_MOVEGENS_CONFUSED              = 531,
-    LANG_MOVEGENS_CHASE_PLAYER          = 532,
-    LANG_MOVEGENS_CHASE_CREATURE        = 533,
-    LANG_MOVEGENS_CHASE_NULL            = 534,
+    LANG_MOVEGENS_TARGETED_PLAYER       = 532,
+    LANG_MOVEGENS_TARGETED_CREATURE     = 533,
+    LANG_MOVEGENS_TARGETED_NULL         = 534,
     LANG_MOVEGENS_HOME_CREATURE         = 535,
     LANG_MOVEGENS_HOME_PLAYER           = 536,
     LANG_MOVEGENS_FLIGHT                = 537,
@@ -513,10 +516,7 @@ enum SkyFireStrings
 
     LANG_PINFO_ACCOUNT                  = 548,
     LANG_PINFO_LEVEL                    = 549,
-    LANG_PINFO_MUTE                     = 550,
-    LANG_PINFO_BAN                      = 453,
-    LANG_PINFO_MAP_ONLINE               = 714,
-    LANG_PINFO_MAP_OFFLINE              = 716,
+    LANG_PINFO_MUTE_BAN                 = 550,
 
     LANG_YOU_SET_EXPLORE_ALL            = 551,
     LANG_YOU_SET_EXPLORE_NOTHING        = 552,
@@ -574,7 +574,6 @@ enum SkyFireStrings
     LANG_GMLIST                         = 597,
     LANG_GMLIST_HEADER                  = 598,
     LANG_GMLIST_EMPTY                   = 599,
-
     // End Level 3 list, continued at 1100
 
     // Battleground
@@ -661,9 +660,9 @@ enum SkyFireStrings
     LANG_BG_QUEUE_ANNOUNCE_SELF         = 711,
     LANG_BG_QUEUE_ANNOUNCE_WORLD        = 712,
     LANG_YOUR_ARENA_LEVEL_REQ_ERROR     = 713,
-//                                      = 714, see LANG_PINFO_MAP_ONLINE
+//                                      = 714, not used
     LANG_YOUR_BG_LEVEL_REQ_ERROR        = 715,
-//                                      = 716, see LANG_PINFO_MAP_OFFLINE
+//                                      = 716, not used
     LANG_BG_STARTED_ANNOUNCE_WORLD      = 717,
     LANG_ARENA_QUEUE_ANNOUNCE_WORLD_JOIN= 718,
     LANG_ARENA_QUEUE_ANNOUNCE_WORLD_EXIT= 719,
@@ -734,8 +733,7 @@ enum SkyFireStrings
     LANG_COMMAND_CREATURESTORAGE_NOTFOUND  = 818,
 
     LANG_CHANNEL_CITY                   = 819,
-    LANG_FAIL_ENTER_SPECTRAL_REALM      = 820,
-    // Room for in-game strings           821-999 not used
+    // Room for in-game strings           820-999 not used
 
     // Level 4 (CLI only commands)
     LANG_COMMAND_EXIT                   = 1000,
@@ -806,14 +804,7 @@ enum SkyFireStrings
     LANG_BANLIST_CHARACTERS_HEADER      = 1133,
     LANG_ALLOW_TICKETS                  = 1134,
     LANG_DISALLOW_TICKETS               = 1135,
-    LANG_CHAR_NOT_BANNED                = 1136,
-    LANG_DEV_ON                         = 1137,
-    LANG_DEV_OFF                        = 1138,
-    LANG_MOVEGENS_FOLLOW_PLAYER         = 1139,
-    LANG_MOVEGENS_FOLLOW_CREATURE       = 1140,
-    LANG_MOVEGENS_FOLLOW_NULL           = 1141,
-    LANG_MOVEGENS_EFFECT                = 1142,
-    // Room for more level 3              1143-1199 not used
+    // Room for more level 3              1136-1199 not used
 
     // Debug commands
     LANG_CINEMATIC_NOT_EXIST            = 1200,
@@ -844,10 +835,45 @@ enum SkyFireStrings
     LANG_BG_IC_REFINERY                 = 1222,
     LANG_BG_IC_QUARRY                   = 1223,
     LANG_BG_IC_HANGAR                   = 1224,
-    LANG_BG_IC_ALLIANCE                 = 1300,
-    LANG_BG_IC_HORDE                    = 1301,
+    LANG_BG_IC_ALLIANCE                 = 1225,
+    LANG_BG_IC_HORDE                    = 1226,
 
-    // FREE IDS                           1228-9999
+    // Twin Peaks
+    LANG_BG_TP_START_TWO_MINUTES        = 1230,
+    LANG_BG_TP_START_ONE_MINUTE         = 1231,
+    LANG_BG_TP_START_HALF_MINUTE        = 1232,
+    LANG_BG_TP_HAS_BEGUN                = 1233,
+    LANG_BG_TP_CAPTURED_HF              = 1234,
+    LANG_BG_TP_CAPTURED_AF              = 1235,
+    LANG_BG_TP_DROPPED_HF               = 1236,
+    LANG_BG_TP_DROPPED_AF               = 1237,
+    LANG_BG_TP_RETURNED_AF              = 1238,
+    LANG_BG_TP_RETURNED_HF              = 1239,
+    LANG_BG_TP_PICKEDUP_HF              = 1240,
+    LANG_BG_TP_PICKEDUP_AF              = 1241,
+    LANG_BG_TP_F_PLACED                 = 1242,
+    LANG_BG_TP_ALLIANCE_FLAG_RESPAWNED  = 1243,
+    LANG_BG_TP_HORDE_FLAG_RESPAWNED     = 1244,
+    // FREE IDS                           1245-1249
+
+    // Battle For Gilneas
+    LANG_BG_BG_START_TWO_MINUTES        = 1250,
+    LANG_BG_BG_START_ONE_MINUTE         = 1251,
+    LANG_BG_BG_START_HALF_MINUTE        = 1252,
+    LANG_BG_BG_HAS_BEGUN                = 1253,
+
+    LANG_BG_BG_ALLY                     = 1254,
+    LANG_BG_BG_HORDE                    = 1255,
+    LANG_BG_BG_NODE_LIGHTHOUSE          = 1256,
+    LANG_BG_BG_NODE_WATERWORKS          = 1257,
+    LANG_BG_BG_NODE_MINE                = 1258,
+    LANG_BG_BG_NODE_TAKEN               = 1259,
+    LANG_BG_BG_NODE_DEFENDED            = 1260,
+    LANG_BG_BG_NODE_ASSAULTED           = 1261,
+    LANG_BG_BG_NODE_CLAIMED             = 1262,
+    LANG_BG_BG_A_NEAR_VICTORY           = 1263,
+    LANG_BG_BG_H_NEAR_VICTORY           = 1264,
+    // FREE IDS                           1265-1299
 
     // AV
     LANG_BG_AV_ALLY                     = 1300,
@@ -917,10 +943,8 @@ enum SkyFireStrings
     LANG_COMMAND_TICKETLISTADDCOMMENT   = 2024,
     LANG_COMMAND_TICKETLISTAGECREATE    = 2025,
     LANG_COMMAND_TICKETSHOWESCALATEDLIST = 2026,
-    LANG_COMMAND_TICKETPENDING          = 2027,
-    LANG_COMMAND_TICKETRESET            = 2028,
 
-    // Trinity strings                    5000-9999
+    // SkyFire Strings                    5000-9999
     LANG_COMMAND_FREEZE                 = 5000,
     LANG_COMMAND_FREEZE_ERROR           = 5001,
     LANG_COMMAND_FREEZE_WRONG           = 5002,
@@ -952,9 +976,7 @@ enum SkyFireStrings
     LANG_GOINFO_NAME                    = 5027,
     LANG_GOINFO_LOOTID                  = 5028,
     LANG_COMMAND_LOOKUP_MAX_RESULTS     = 5029,
-    LANG_FLEE                           = 5030,
-    LANG_NPCINFO_AIINFO                 = 5031,
-    // Room for more SkyFire strings      5032-9999
+    // Room for more SkyFire Strings      5030-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,
@@ -986,12 +1008,12 @@ enum SkyFireStrings
     LANG_OPVP_HP_CAPTURE_STADIUM_A      = 10004,
     LANG_OPVP_HP_CAPTURE_BROKENHILL_H   = 10005,
     LANG_OPVP_HP_CAPTURE_BROKENHILL_A   = 10006,
-    LANG_OPVP_HP_LOSE_OVERLOOK_H       = 10007,
-    LANG_OPVP_HP_LOSE_OVERLOOK_A       = 10008,
-    LANG_OPVP_HP_LOSE_STADIUM_H        = 10009,
-    LANG_OPVP_HP_LOSE_STADIUM_A        = 10010,
-    LANG_OPVP_HP_LOSE_BROKENHILL_H     = 10011,
-    LANG_OPVP_HP_LOSE_BROKENHILL_A     = 10012,
+    LANG_OPVP_HP_LOOSE_OVERLOOK_H       = 10007,
+    LANG_OPVP_HP_LOOSE_OVERLOOK_A       = 10008,
+    LANG_OPVP_HP_LOOSE_STADIUM_H        = 10009,
+    LANG_OPVP_HP_LOOSE_STADIUM_A        = 10010,
+    LANG_OPVP_HP_LOOSE_BROKENHILL_H     = 10011,
+    LANG_OPVP_HP_LOOSE_BROKENHILL_A     = 10012,
     // opvp zm
     LANG_OPVP_ZM_CAPTURE_WEST_H         = 10013,
     LANG_OPVP_ZM_CAPTURE_WEST_A         = 10014,
@@ -999,22 +1021,22 @@ enum SkyFireStrings
     LANG_OPVP_ZM_CAPTURE_EAST_A         = 10016,
     LANG_OPVP_ZM_CAPTURE_GY_H           = 10017,
     LANG_OPVP_ZM_CAPTURE_GY_A           = 10018,
-    LANG_OPVP_ZM_LOSE_WEST_H           = 10019,
-    LANG_OPVP_ZM_LOSE_WEST_A           = 10020,
-    LANG_OPVP_ZM_LOSE_EAST_H           = 10021,
-    LANG_OPVP_ZM_LOSE_EAST_A           = 10022,
-    LANG_OPVP_ZM_LOSE_GY_H             = 10023,
-    LANG_OPVP_ZM_LOSE_GY_A             = 10024,
+    LANG_OPVP_ZM_LOOSE_WEST_H           = 10019,
+    LANG_OPVP_ZM_LOOSE_WEST_A           = 10020,
+    LANG_OPVP_ZM_LOOSE_EAST_H           = 10021,
+    LANG_OPVP_ZM_LOOSE_EAST_A           = 10022,
+    LANG_OPVP_ZM_LOOSE_GY_H             = 10023,
+    LANG_OPVP_ZM_LOOSE_GY_A             = 10024,
     // opvp na
     LANG_OPVP_NA_CAPTURE_H              = 10025,
     LANG_OPVP_NA_CAPTURE_A              = 10026,
-    LANG_OPVP_NA_LOSE_H                = 10027,
-    LANG_OPVP_NA_LOSE_A                = 10028,
+    LANG_OPVP_NA_LOOSE_H                = 10027,
+    LANG_OPVP_NA_LOOSE_A                = 10028,
     // opvp tf
     LANG_OPVP_TF_CAPTURE_H              = 10029,
     LANG_OPVP_TF_CAPTURE_A              = 10030,
-    LANG_OPVP_TF_LOSE_H                = 10031,
-    LANG_OPVP_TF_LOSE_A                = 10032,
+    LANG_OPVP_TF_LOOSE_H                = 10031,
+    LANG_OPVP_TF_LOOSE_A                = 10032,
     // opvp ep
     LANG_OPVP_EP_CAPTURE_NPT_H          = 10033,
     LANG_OPVP_EP_CAPTURE_NPT_A          = 10034,
@@ -1024,14 +1046,14 @@ enum SkyFireStrings
     LANG_OPVP_EP_CAPTURE_CGT_A          = 10038,
     LANG_OPVP_EP_CAPTURE_PWT_H          = 10039,
     LANG_OPVP_EP_CAPTURE_PWT_A          = 10040,
-    LANG_OPVP_EP_LOSE_NPT_H            = 10041,
-    LANG_OPVP_EP_LOSE_NPT_A            = 10042,
-    LANG_OPVP_EP_LOSE_EWT_H            = 10043,
-    LANG_OPVP_EP_LOSE_EWT_A            = 10044,
-    LANG_OPVP_EP_LOSE_CGT_H            = 10045,
-    LANG_OPVP_EP_LOSE_CGT_A            = 10046,
-    LANG_OPVP_EP_LOSE_PWT_H            = 10047,
-    LANG_OPVP_EP_LOSE_PWT_A            = 10048,
+    LANG_OPVP_EP_LOOSE_NPT_H            = 10041,
+    LANG_OPVP_EP_LOOSE_NPT_A            = 10042,
+    LANG_OPVP_EP_LOOSE_EWT_H            = 10043,
+    LANG_OPVP_EP_LOOSE_EWT_A            = 10044,
+    LANG_OPVP_EP_LOOSE_CGT_H            = 10045,
+    LANG_OPVP_EP_LOOSE_CGT_A            = 10046,
+    LANG_OPVP_EP_LOOSE_PWT_H            = 10047,
+    LANG_OPVP_EP_LOOSE_PWT_A            = 10048,
     // opvp si
     LANG_OPVP_SI_CAPTURE_H              = 10049,
     LANG_OPVP_SI_CAPTURE_A              = 10050,
@@ -1064,6 +1086,29 @@ enum SkyFireStrings
     // Use for custom patches             11000-11999
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
+    LANG_FAILED_NO_PLACE_FOR_PET        = 11002,
+
+    LANG_AHBOT_RELOAD_OK                = 11003,
+    LANG_AHBOT_RELOAD_FAIL              = 11004,
+    LANG_AHBOT_STATUS_BAR_CONSOLE       = 11005,
+    LANG_AHBOT_STATUS_MIDBAR_CONSOLE    = 11006,
+    LANG_AHBOT_STATUS_TITLE1_CONSOLE    = 11007,
+    LANG_AHBOT_STATUS_TITLE1_CHAT       = 11008,
+    LANG_AHBOT_STATUS_FORMAT_CONSOLE    = 11009,
+    LANG_AHBOT_STATUS_FORMAT_CHAT       = 11010,
+    LANG_AHBOT_STATUS_ITEM_COUNT        = 11011,
+    LANG_AHBOT_STATUS_ITEM_RATIO        = 11012,
+    LANG_AHBOT_STATUS_TITLE2_CONSOLE    = 11013,
+    LANG_AHBOT_STATUS_TITLE2_CHAT       = 11014,
+    LANG_AHBOT_QUALITY_GREY             = 11015,
+    LANG_AHBOT_QUALITY_WHITE            = 11016,
+    LANG_AHBOT_QUALITY_GREEN            = 11017,
+    LANG_AHBOT_QUALITY_BLUE             = 11018,
+    LANG_AHBOT_QUALITY_PURPLE           = 11019,
+    LANG_AHBOT_QUALITY_ORANGE           = 11020,
+    LANG_AHBOT_QUALITY_YELLOW           = 11021,
+    LANG_AHBOT_ITEMS_AMOUNT             = 11022,
+    LANG_AHBOT_ITEMS_RATIO              = 11023,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

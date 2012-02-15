@@ -77,6 +77,7 @@
 #include "SmartAI.h"
 #include "Channel.h"
 #include "DB2Stores.h"
+#include "AuctionHouseBot.h"
 
 volatile bool World::m_stopEvent = false;
 uint8 World::m_ExitCode = SHUTDOWN_EXIT_CODE;
@@ -311,7 +312,7 @@ bool World::HasRecentlyDisconnected(WorldSession* session)
         }
     }
     return false;
- }
+}
 
 int32 World::GetQueuePos(WorldSession* sess)
 {
@@ -524,7 +525,7 @@ void World::LoadConfigSettings(bool reload)
     else if (rate_values[RATE_TARGET_POS_RECALCULATION_RANGE] > NOMINAL_MELEE_RANGE)
     {
         sLog->outError("TargetPosRecalculateRange (%f) must be <= %f. Using %f instead.",
-            rate_values[RATE_TARGET_POS_RECALCULATION_RANGE], NOMINAL_MELEE_RANGE, NOMINAL_MELEE_RANGE);
+                       rate_values[RATE_TARGET_POS_RECALCULATION_RANGE], NOMINAL_MELEE_RANGE, NOMINAL_MELEE_RANGE);
         rate_values[RATE_TARGET_POS_RECALCULATION_RANGE] = NOMINAL_MELEE_RANGE;
     }
 
@@ -761,13 +762,13 @@ void World::LoadConfigSettings(bool reload)
     if (m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] < 1)
     {
         sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to 55.",
-            m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
+                       m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] = 55;
     }
     else if (m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] > m_int_configs[CONFIG_MAX_PLAYER_LEVEL])
     {
         sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to %u.",
-            m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
+                       m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] = m_int_configs[CONFIG_MAX_PLAYER_LEVEL];
     }
 
@@ -775,12 +776,12 @@ void World::LoadConfigSettings(bool reload)
     if (int32(m_int_configs[CONFIG_START_PLAYER_MONEY]) < 0)
     {
         sLog->outError("StartPlayerMoney (%i) must be in range 0..%u. Set to %u.", m_int_configs[CONFIG_START_PLAYER_MONEY], MAX_MONEY_AMOUNT, 0);
-            m_int_configs[CONFIG_START_PLAYER_MONEY] = 0;
+        m_int_configs[CONFIG_START_PLAYER_MONEY] = 0;
     }
     else if (m_int_configs[CONFIG_START_PLAYER_MONEY] > MAX_MONEY_AMOUNT)
     {
         sLog->outError("StartPlayerMoney (%i) must be in range 0..%u. Set to %u.",
-            m_int_configs[CONFIG_START_PLAYER_MONEY], MAX_MONEY_AMOUNT, MAX_MONEY_AMOUNT);
+                       m_int_configs[CONFIG_START_PLAYER_MONEY], MAX_MONEY_AMOUNT, MAX_MONEY_AMOUNT);
         m_int_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
 
@@ -795,13 +796,13 @@ void World::LoadConfigSettings(bool reload)
     if (int32(m_int_configs[CONFIG_START_HONOR_POINTS]) < 0)
     {
         sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.",
-            m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], 0);
+                       m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], 0);
         m_int_configs[CONFIG_START_HONOR_POINTS] = 0;
     }
     else if (m_int_configs[CONFIG_START_HONOR_POINTS] > m_int_configs[CONFIG_MAX_HONOR_POINTS])
     {
         sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.",
-            m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS]);
+                       m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS]);
         m_int_configs[CONFIG_START_HONOR_POINTS] = m_int_configs[CONFIG_MAX_HONOR_POINTS];
     }
 
@@ -816,13 +817,13 @@ void World::LoadConfigSettings(bool reload)
     if (int32(m_int_configs[CONFIG_START_ARENA_POINTS]) < 0)
     {
         sLog->outError("StartArenaPoints (%i) must be in range 0..MaxArenaPoints(%u). Set to %u.",
-            m_int_configs[CONFIG_START_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS], 0);
+                       m_int_configs[CONFIG_START_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS], 0);
         m_int_configs[CONFIG_START_ARENA_POINTS] = 0;
     }
     else if (m_int_configs[CONFIG_START_ARENA_POINTS] > m_int_configs[CONFIG_MAX_ARENA_POINTS])
     {
         sLog->outError("StartArenaPoints (%i) must be in range 0..MaxArenaPoints(%u). Set to %u.",
-            m_int_configs[CONFIG_START_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS]);
+                       m_int_configs[CONFIG_START_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS], m_int_configs[CONFIG_MAX_ARENA_POINTS]);
         m_int_configs[CONFIG_START_ARENA_POINTS] = m_int_configs[CONFIG_MAX_ARENA_POINTS];
     }
 
@@ -830,7 +831,7 @@ void World::LoadConfigSettings(bool reload)
     if (m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL] > m_int_configs[CONFIG_MAX_PLAYER_LEVEL])
     {
         sLog->outError("RecruitAFriend.MaxLevel (%i) must be in the range 0..MaxLevel(%u). Set to %u.",
-            m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], 60);
+                       m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], 60);
         m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL] = 60;
     }
 
@@ -880,7 +881,7 @@ void World::LoadConfigSettings(bool reload)
     if (m_int_configs[CONFIG_START_GM_LEVEL] < m_int_configs[CONFIG_START_PLAYER_LEVEL])
     {
         sLog->outError("GM.StartLevel (%i) must be in range StartPlayerLevel(%u)..%u. Set to %u.",
-            m_int_configs[CONFIG_START_GM_LEVEL], m_int_configs[CONFIG_START_PLAYER_LEVEL], MAX_LEVEL, m_int_configs[CONFIG_START_PLAYER_LEVEL]);
+                       m_int_configs[CONFIG_START_GM_LEVEL], m_int_configs[CONFIG_START_PLAYER_LEVEL], MAX_LEVEL, m_int_configs[CONFIG_START_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_GM_LEVEL] = m_int_configs[CONFIG_START_PLAYER_LEVEL];
     }
     else if (m_int_configs[CONFIG_START_GM_LEVEL] > MAX_LEVEL)
@@ -923,7 +924,7 @@ void World::LoadConfigSettings(bool reload)
     }
     m_int_configs[CONFIG_LOGDB_CLEARTIME] = ConfigMgr::GetIntDefault("LogDB.Opt.ClearTime", 1209600); // 14 days default
     sLog->outString("Will clear `logs` table of entries older than %i seconds every %u minutes.",
-        m_int_configs[CONFIG_LOGDB_CLEARTIME], m_int_configs[CONFIG_LOGDB_CLEARINTERVAL]);
+                    m_int_configs[CONFIG_LOGDB_CLEARTIME], m_int_configs[CONFIG_LOGDB_CLEARINTERVAL]);
 
     m_int_configs[CONFIG_SKILL_CHANCE_ORANGE] = ConfigMgr::GetIntDefault("SkillChance.Orange", 100);
     m_int_configs[CONFIG_SKILL_CHANCE_YELLOW] = ConfigMgr::GetIntDefault("SkillChance.Yellow", 75);
@@ -1252,14 +1253,14 @@ void World::SetInitialWorldSettings()
     {
         ///- Check the existence of the map files for all races' startup areas.
         if (!MapManager::ExistMapAndVMap(0, -6240.32f, 331.033f)
-            || !MapManager::ExistMapAndVMap(0, -8949.95f, -132.493f)
-            || !MapManager::ExistMapAndVMap(1, -618.518f, -4251.67f)
-            || !MapManager::ExistMapAndVMap(0, 1676.35f, 1677.45f)
-            || !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f)
-            || !MapManager::ExistMapAndVMap(1, -2917.58f, -257.98f)
-            || (m_int_configs[CONFIG_EXPANSION] && (
-            !MapManager::ExistMapAndVMap(530, 10349.6f, -6357.29f) ||
-            !MapManager::ExistMapAndVMap(530, -3961.64f, -13931.2f))))
+                || !MapManager::ExistMapAndVMap(0, -8949.95f, -132.493f)
+                || !MapManager::ExistMapAndVMap(1, -618.518f, -4251.67f)
+                || !MapManager::ExistMapAndVMap(0, 1676.35f, 1677.45f)
+                || !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f)
+                || !MapManager::ExistMapAndVMap(1, -2917.58f, -257.98f)
+                || (m_int_configs[CONFIG_EXPANSION] && (
+                        !MapManager::ExistMapAndVMap(530, 10349.6f, -6357.29f) ||
+                        !MapManager::ExistMapAndVMap(530, -3961.64f, -13931.2f))))
         {
             sLog->outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map/*.vmtree/*.vmtile files in appropriate directories or correct the DataDir value in the worldserver.conf file.", m_dataPath.c_str(), m_dataPath.c_str());
             exit(1);
@@ -1699,30 +1700,33 @@ void World::SetInitialWorldSettings()
     local=*(localtime(&curr));                              // dereference and assign
     char isoDate[128];
     sprintf(isoDate, "%04d-%02d-%02d %02d:%02d:%02d",
-        local.tm_year+1900, local.tm_mon+1, local.tm_mday, local.tm_hour, local.tm_min, local.tm_sec);
+            local.tm_year+1900, local.tm_mon+1, local.tm_mday, local.tm_hour, local.tm_min, local.tm_sec);
 
     LoginDatabase.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime, revision) VALUES('%u', " UI64FMTD ", '%s', 0, '%s')",
-        realmID, uint64(m_startTime), isoDate, _FULLVERSION);       // One-time query
+                           realmID, uint64(m_startTime), isoDate, _FULLVERSION);       // One-time query
 
     m_timers[WUPDATE_WEATHERS].SetInterval(1*IN_MILLISECONDS);
     m_timers[WUPDATE_AUCTIONS].SetInterval(MINUTE*IN_MILLISECONDS);
     m_timers[WUPDATE_UPTIME].SetInterval(m_int_configs[CONFIG_UPTIME_UPDATE]*MINUTE*IN_MILLISECONDS);
-                                                            //Update "uptime" table based on configuration entry in minutes.
+    //Update "uptime" table based on configuration entry in minutes.
     m_timers[WUPDATE_CORPSES].SetInterval(20 * MINUTE * IN_MILLISECONDS);
-                                                            //erase corpses every 20 minutes
+    //erase corpses every 20 minutes
     m_timers[WUPDATE_CLEANDB].SetInterval(m_int_configs[CONFIG_LOGDB_CLEARINTERVAL]*MINUTE*IN_MILLISECONDS);
-                                                            // clean logs table every 14 days by default
+    // clean logs table every 14 days by default
     m_timers[WUPDATE_AUTOBROADCAST].SetInterval(getIntConfig(CONFIG_AUTOBROADCAST_INTERVAL));
     m_timers[WUPDATE_DELETECHARS].SetInterval(DAY*IN_MILLISECONDS); // check for chars to delete every day
 
     m_timers[WUPDATE_PINGDB].SetInterval(getIntConfig(CONFIG_DB_PING_INTERVAL)*MINUTE*IN_MILLISECONDS);    // Mysql ping time in minutes
+
+    // for AhBot
+    m_timers[WUPDATE_AHBOT].SetInterval(20*IN_MILLISECONDS); // every 20 sec
 
     //to set mailtimer to return mails every day between 4 and 5 am
     //mailtimer is increased when updating auctions
     //one second is 1000 -(tested on win system)
     //TODO: Get rid of magic numbers
     mail_timer = ((((localtime(&m_gameTime)->tm_hour + 20) % 24)* HOUR * IN_MILLISECONDS) / m_timers[WUPDATE_AUCTIONS].GetInterval());
-                                                            //1440
+    //1440
     mail_timer_expires = ((DAY * IN_MILLISECONDS) / (m_timers[WUPDATE_AUCTIONS].GetInterval()));
     sLog->outDetail("Mail timer set to: " UI64FMTD ", mail return is called every " UI64FMTD " minutes", uint64(mail_timer), uint64(mail_timer_expires));
 
@@ -1788,6 +1792,9 @@ void World::SetInitialWorldSettings()
 
     LoadCharacterNameData();
 
+    sLog->outString("Initialize AuctionHouseBot...");
+    sAuctionBot.Initialize();
+
     // possibly enable db logging; avoid massive startup spam by doing it here.
     if (sLog->GetLogDBLater())
     {
@@ -1831,7 +1838,7 @@ void World::DetectDBCLang()
     }
 
     if (default_locale != m_lang_confid && m_lang_confid < TOTAL_LOCALES &&
-        (m_availableDbcLocaleMask & (1 << m_lang_confid)))
+            (m_availableDbcLocaleMask & (1 << m_lang_confid)))
     {
         default_locale = m_lang_confid;
     }
@@ -1948,7 +1955,7 @@ void World::Update(uint32 diff)
         ResetWeeklyQuests();
 
     // if (m_gameTime > m_NextDailyXPReset)
-        // ResetGuildAdvancementDailyXP();
+    // ResetGuildAdvancementDailyXP();
 
     if (m_gameTime > m_NextRandomBGReset)
         ResetRandomBG();
@@ -1956,6 +1963,7 @@ void World::Update(uint32 diff)
     /// <ul><li> Handle auctions when the timer has passed
     if (m_timers[WUPDATE_AUCTIONS].Passed())
     {
+        // sAuctionBot.Update();
         m_timers[WUPDATE_AUCTIONS].Reset();
 
         ///- Update mails (return old mails with item, or delete them)
@@ -2080,6 +2088,13 @@ void World::Update(uint32 diff)
         WorldDatabase.KeepAlive();
     }
 
+    /// <li> Handle AHBot operations
+    if (m_timers[WUPDATE_AHBOT].Passed())
+    {
+        sAuctionBot.Update();
+        m_timers[WUPDATE_AHBOT].Reset();
+    }
+
     // update the instance reset times
     sInstanceSaveMgr->Update();
 
@@ -2104,10 +2119,10 @@ void World::SendGlobalMessage(WorldPacket* packet, WorldSession* self, uint32 te
     for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (itr->second &&
-            itr->second->GetPlayer() &&
-            itr->second->GetPlayer()->IsInWorld() &&
-            itr->second != self &&
-            (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
+                itr->second->GetPlayer() &&
+                itr->second->GetPlayer()->IsInWorld() &&
+                itr->second != self &&
+                (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
         {
             itr->second->SendPacket(packet);
         }
@@ -2121,11 +2136,11 @@ void World::SendGlobalGMMessage(WorldPacket* packet, WorldSession* self, uint32 
     for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (itr->second &&
-            itr->second->GetPlayer() &&
-            itr->second->GetPlayer()->IsInWorld() &&
-            itr->second != self &&
-            !AccountMgr::IsPlayerAccount(itr->second->GetSecurity()) &&
-            (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
+                itr->second->GetPlayer() &&
+                itr->second->GetPlayer()->IsInWorld() &&
+                itr->second != self &&
+                !AccountMgr::IsPlayerAccount(itr->second->GetSecurity()) &&
+                (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
         {
             itr->second->SendPacket(packet);
         }
@@ -2134,59 +2149,63 @@ void World::SendGlobalGMMessage(WorldPacket* packet, WorldSession* self, uint32 
 
 namespace Trinity
 {
-    class WorldWorldTextBuilder
+class WorldWorldTextBuilder
+{
+public:
+    typedef std::vector<WorldPacket*> WorldPacketList;
+    explicit WorldWorldTextBuilder(int32 textId, va_list* args = NULL) : i_textId(textId), i_args(args) {}
+    void operator()(WorldPacketList& data_list, LocaleConstant loc_idx)
     {
-        public:
-            typedef std::vector<WorldPacket*> WorldPacketList;
-            explicit WorldWorldTextBuilder(int32 textId, va_list* args = NULL) : i_textId(textId), i_args(args) {}
-            void operator()(WorldPacketList& data_list, LocaleConstant loc_idx)
-            {
-                char const* text = sObjectMgr->GetSkyFireString(i_textId, loc_idx);
+        char const* text = sObjectMgr->GetSkyFireString(i_textId, loc_idx);
 
-                if (i_args)
-                {
-                    // we need copy va_list before use or original va_list will corrupted
-                    va_list ap;
-                    va_copy(ap, *i_args);
+        if (i_args)
+        {
+            // we need copy va_list before use or original va_list will corrupted
+            va_list ap;
+            va_copy(ap, *i_args);
 
-                    char str[2048];
-                    vsnprintf(str, 2048, text, ap);
-                    va_end(ap);
+            char str[2048];
+            vsnprintf(str, 2048, text, ap);
+            va_end(ap);
 
-                    do_helper(data_list, &str[0]);
-                }
-                else
-                    do_helper(data_list, (char*)text);
-            }
-        private:
-            char* lineFromMessage(char*& pos) { char* start = strtok(pos, "\n"); pos = NULL; return start; }
-            void do_helper(WorldPacketList& data_list, char* text)
-            {
-                char* pos = text;
+            do_helper(data_list, &str[0]);
+        }
+        else
+            do_helper(data_list, (char*)text);
+    }
+private:
+    char* lineFromMessage(char*& pos) {
+        char* start = strtok(pos, "\n");
+        pos = NULL;
+        return start;
+    }
+    void do_helper(WorldPacketList& data_list, char* text)
+    {
+        char* pos = text;
 
-                while (char* line = lineFromMessage(pos))
-                {
-                    WorldPacket* data = new WorldPacket();
+        while (char* line = lineFromMessage(pos))
+        {
+            WorldPacket* data = new WorldPacket();
 
-                    uint32 lineLength = (line ? strlen(line) : 0) + 1;
+            uint32 lineLength = (line ? strlen(line) : 0) + 1;
 
-                    data->Initialize(SMSG_MESSAGECHAT, 100);                // guess size
-                    *data << uint8(CHAT_MSG_SYSTEM);
-                    *data << uint32(LANG_UNIVERSAL);
-                    *data << uint64(0);
-                    *data << uint32(0);                                     // can be chat msg group or something
-                    *data << uint64(0);
-                    *data << uint32(lineLength);
-                    *data << line;
-                    *data << uint8(0);
+            data->Initialize(SMSG_MESSAGECHAT, 100);                // guess size
+            *data << uint8(CHAT_MSG_SYSTEM);
+            *data << uint32(LANG_UNIVERSAL);
+            *data << uint64(0);
+            *data << uint32(0);                                     // can be chat msg group or something
+            *data << uint64(0);
+            *data << uint32(lineLength);
+            *data << line;
+            *data << uint8(0);
 
-                    data_list.push_back(data);
-                }
-            }
+            data_list.push_back(data);
+        }
+    }
 
-            int32 i_textId;
-            va_list* i_args;
-    };
+    int32 i_textId;
+    va_list* i_args;
+};
 }                                                           // namespace Trinity
 
 /// Send a System Message to all players (except self if mentioned)
@@ -2255,11 +2274,11 @@ void World::SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self
     for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (itr->second &&
-            itr->second->GetPlayer() &&
-            itr->second->GetPlayer()->IsInWorld() &&
-            itr->second->GetPlayer()->GetZoneId() == zone &&
-            itr->second != self &&
-            (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
+                itr->second->GetPlayer() &&
+                itr->second->GetPlayer()->IsInWorld() &&
+                itr->second->GetPlayer()->GetZoneId() == zone &&
+                itr->second != self &&
+                (team == 0 || itr->second->GetPlayer()->GetTeam() == team))
         {
             itr->second->SendPacket(packet);
         }
@@ -2303,32 +2322,32 @@ BanReturn World::BanAccount(BanMode mode, std::string nameOrIP, std::string dura
     ///- Update the database with ban information
     switch (mode)
     {
-        case BAN_IP:
-            // No SQL injection with prepared statements
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCOUNT_BY_IP);
-            stmt->setString(0, nameOrIP);
-            resultAccounts = LoginDatabase.Query(stmt);
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_IP_BANNED);
-            stmt->setString(0, nameOrIP);
-            stmt->setUInt32(1, duration_secs);
-            stmt->setString(2, author);
-            stmt->setString(3, reason);
-            LoginDatabase.Execute(stmt);
-            break;
-        case BAN_ACCOUNT:
-            // No SQL injection with prepared statements
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
-            stmt->setString(0, nameOrIP);
-            resultAccounts = LoginDatabase.Query(stmt);
-            break;
-        case BAN_CHARACTER:
-            // No SQL injection with prepared statements
-            stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_ACCOUNT_BY_NAME);
-            stmt->setString(0, nameOrIP);
-            resultAccounts = CharacterDatabase.Query(stmt);
-            break;
-        default:
-            return BAN_SYNTAX_ERROR;
+    case BAN_IP:
+        // No SQL injection with prepared statements
+        stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCOUNT_BY_IP);
+        stmt->setString(0, nameOrIP);
+        resultAccounts = LoginDatabase.Query(stmt);
+        stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_IP_BANNED);
+        stmt->setString(0, nameOrIP);
+        stmt->setUInt32(1, duration_secs);
+        stmt->setString(2, author);
+        stmt->setString(3, reason);
+        LoginDatabase.Execute(stmt);
+        break;
+    case BAN_ACCOUNT:
+        // No SQL injection with prepared statements
+        stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
+        stmt->setString(0, nameOrIP);
+        resultAccounts = LoginDatabase.Query(stmt);
+        break;
+    case BAN_CHARACTER:
+        // No SQL injection with prepared statements
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_ACCOUNT_BY_NAME);
+        stmt->setString(0, nameOrIP);
+        resultAccounts = CharacterDatabase.Query(stmt);
+        break;
+    default:
+        return BAN_SYNTAX_ERROR;
     }
 
     if (!resultAccounts)
@@ -2537,11 +2556,11 @@ void World::ShutdownMsg(bool show, Player* player)
 
     ///- Display a message every 12 hours, hours, 5 minutes, minute, 5 seconds and finally seconds
     if (show ||
-        (m_ShutdownTimer < 5* MINUTE && (m_ShutdownTimer % 15) == 0) || // < 5 min; every 15 sec
-        (m_ShutdownTimer < 15 * MINUTE && (m_ShutdownTimer % MINUTE) == 0) || // < 15 min ; every 1 min
-        (m_ShutdownTimer < 30 * MINUTE && (m_ShutdownTimer % (5 * MINUTE)) == 0) || // < 30 min ; every 5 min
-        (m_ShutdownTimer < 12 * HOUR && (m_ShutdownTimer % HOUR) == 0) || // < 12 h ; every 1 h
-        (m_ShutdownTimer > 12 * HOUR && (m_ShutdownTimer % (12 * HOUR)) == 0)) // > 12 h ; every 12 h
+            (m_ShutdownTimer < 5* MINUTE && (m_ShutdownTimer % 15) == 0) || // < 5 min; every 15 sec
+            (m_ShutdownTimer < 15 * MINUTE && (m_ShutdownTimer % MINUTE) == 0) || // < 15 min ; every 1 min
+            (m_ShutdownTimer < 30 * MINUTE && (m_ShutdownTimer % (5 * MINUTE)) == 0) || // < 30 min ; every 5 min
+            (m_ShutdownTimer < 12 * HOUR && (m_ShutdownTimer % HOUR) == 0) || // < 12 h ; every 1 h
+            (m_ShutdownTimer > 12 * HOUR && (m_ShutdownTimer % (12 * HOUR)) == 0)) // > 12 h ; every 12 h
     {
         std::string str = secsToTimeString(m_ShutdownTimer);
 
@@ -3037,7 +3056,7 @@ void World::LoadCharacterNameData()
     {
         Field *fields = result->Fetch();
         AddCharacterNameData(fields[0].GetUInt32(), fields[1].GetString(),
-            fields[3].GetUInt8() /*gender*/, fields[2].GetUInt8() /*race*/, fields[4].GetUInt8() /*class*/);
+                             fields[3].GetUInt8() /*gender*/, fields[2].GetUInt8() /*race*/, fields[4].GetUInt8() /*class*/);
         ++count;
     } while (result->NextRow());
 
