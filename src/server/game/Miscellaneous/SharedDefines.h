@@ -34,14 +34,13 @@ enum SpellEffIndex
 #define EFFECT_FIRST_FOUND 254
 #define EFFECT_ALL 255
 
-// loot modes for creatures and gameobjects, bitmask!
 enum LootModes
 {
-    LOOT_MODE_DEFAULT                  = 0x1,
-    LOOT_MODE_HARD_MODE_1              = 0x2,
-    LOOT_MODE_HARD_MODE_2              = 0x4,
-    LOOT_MODE_HARD_MODE_3              = 0x8,
-    LOOT_MODE_HARD_MODE_4              = 0x16
+    LOOT_MODE_DEFAULT                  = 1,
+    LOOT_MODE_HARD_MODE_1              = 2,
+    LOOT_MODE_HARD_MODE_2              = 4,
+    LOOT_MODE_HARD_MODE_3              = 8,
+    LOOT_MODE_HARD_MODE_4              = 16
 };
 
 enum Gender
@@ -171,20 +170,20 @@ enum Stats
 
 enum Powers
 {
-    POWER_MANA                          = 0,
-    POWER_RAGE                          = 1,
-    POWER_FOCUS                         = 2,
-    POWER_ENERGY                        = 3,
-    POWER_HAPPINESS                     = 4,
-    POWER_RUNE                          = 5,
-    POWER_RUNIC_POWER                   = 6,
-    POWER_SOULSHARD                     = 7,
-    POWER_ECLIPSE                       = 8,
-    POWER_HOLY_POWER                    = 9,
-    POWER_ALTERNATIVE                   = 10,           // Used in some quests
-    MAX_POWERS                          = 11,
-    POWER_ALL                           = 127,          // default for class?
-    POWER_HEALTH                        = 0xFFFFFFFE    // (-2 as signed value)
+    POWER_MANA                            = 0,
+    POWER_RAGE                            = 1,
+    POWER_FOCUS                           = 2,
+    POWER_ENERGY                          = 3,
+    POWER_HAPPINESS                       = 4,
+    POWER_RUNE                            = 5,
+    POWER_RUNIC_POWER                     = 6,
+    POWER_SOULSHARDS                      = 7,
+    POWER_ECLIPSE                         = 8,
+    POWER_HOLY_POWER                      = 9,
+ // POWER_ALTERNATIVE                     = 10,  // Used in some quests
+    MAX_POWERS                            = 10,
+    POWER_ALL                             = 127, // default for class?
+    POWER_HEALTH                          = 0xFFFFFFFE // (-2 as signed value)
 };
 
 enum SpellSchools
@@ -1878,14 +1877,14 @@ enum Emote
     EMOTE_STATE_AT_EASE                = 313,
     EMOTE_STATE_READY1H                = 333,
     EMOTE_STATE_SPELLKNEELSTART        = 353,
+    EMOTE_STATE_FISHING                = 362,
+    EMOTE_ONESHOT_FISHING              = 363,
     EMOTE_STATE_SUBMERGED              = 373,
     EMOTE_ONESHOT_SUBMERGE             = 374,
     EMOTE_STATE_READY2H                = 375,
     EMOTE_STATE_READYBOW               = 376,
     EMOTE_ONESHOT_MOUNTSPECIAL         = 377,
     EMOTE_STATE_TALK                   = 378,
-    EMOTE_STATE_FISHING                = 379,
-    EMOTE_ONESHOT_FISHING              = 380,
     EMOTE_ONESHOT_LOOT                 = 381,
     EMOTE_STATE_WHIRLWIND              = 382,
     EMOTE_STATE_DROWNED                = 383,
@@ -2684,7 +2683,7 @@ enum SkillType
 
 inline SkillType SkillByLockType(LockType locktype)
 {
-    switch(locktype)
+    switch (locktype)
     {
         case LOCKTYPE_PICKLOCK:    return SKILL_LOCKPICKING;
         case LOCKTYPE_HERBALISM:   return SKILL_HERBALISM;

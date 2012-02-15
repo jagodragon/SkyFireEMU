@@ -37,18 +37,18 @@ public:
     {
         static ChatCommand wpCommandTable[] =
         {
-            { "add",            SEC_GAMEMASTER,     false, &HandleWpAddCommand,                "", NULL },
-            { "event",          SEC_GAMEMASTER,     false, &HandleWpEventCommand,              "", NULL },
-            { "load",           SEC_GAMEMASTER,     false, &HandleWpLoadCommand,               "", NULL },
-            { "modify",         SEC_GAMEMASTER,     false, &HandleWpModifyCommand,             "", NULL },
-            { "unload",         SEC_GAMEMASTER,     false, &HandleWpUnLoadCommand,             "", NULL },
-            { "reload",         SEC_ADMINISTRATOR,  false, &HandleWpReloadCommand,             "", NULL },
-            { "show",           SEC_GAMEMASTER,     false, &HandleWpShowCommand,               "", NULL },
+            { "add",           SEC_GAMEMASTER,     false, &HandleWpAddCommand,                "", NULL },
+            { "event",         SEC_GAMEMASTER,     false, &HandleWpEventCommand,              "", NULL },
+            { "load",          SEC_GAMEMASTER,     false, &HandleWpLoadCommand,               "", NULL },
+            { "modify",        SEC_GAMEMASTER,     false, &HandleWpModifyCommand,             "", NULL },
+            { "unload",        SEC_GAMEMASTER,     false, &HandleWpUnLoadCommand,             "", NULL },
+            { "reload",        SEC_ADMINISTRATOR,  false, &HandleWpReloadCommand,             "", NULL },
+            { "show",          SEC_GAMEMASTER,     false, &HandleWpShowCommand,               "", NULL },
             { NULL,             0,                  false, NULL,                               "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "wp",             SEC_GAMEMASTER,     false, NULL,                     "", wpCommandTable },
+            { "wp",            SEC_GAMEMASTER,     false, NULL,                     "", wpCommandTable },
             { NULL,             0,                  false, NULL,                               "", NULL }
         };
         return commandTable;
@@ -1040,7 +1040,7 @@ public:
             }
             while (result->NextRow());
             // set "wpguid" column to "empty" - no visual waypoint spawned
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WOLRD_UPD_ALL_WAYPOINT_DATA_WPGUID);
+            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_UPD_ALL_WAYPOINT_DATA_WPGUID);
 
             WorldDatabase.Execute(stmt);
             //WorldDatabase.PExecute("UPDATE creature_movement SET wpguid = '0' WHERE wpguid <> '0'");

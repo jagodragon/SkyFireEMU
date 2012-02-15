@@ -27,6 +27,7 @@ EndScriptData */
 #include "ObjectMgr.h"
 #include "Chat.h"
 #include "AccountMgr.h"
+#include "World.h"
 
 class gm_commandscript : public CommandScript
 {
@@ -37,17 +38,17 @@ public:
     {
         static ChatCommand gmCommandTable[] =
         {
-            { "chat",           SEC_MODERATOR,      false, &HandleGMChatCommand,              "", NULL },
-            { "fly",            SEC_ADMINISTRATOR,  false, &HandleGMFlyCommand,               "", NULL },
-            { "ingame",         SEC_PLAYER,         true,  &HandleGMListIngameCommand,        "", NULL },
-            { "list",           SEC_ADMINISTRATOR,  true,  &HandleGMListFullCommand,          "", NULL },
-            { "visible",        SEC_MODERATOR,      false, &HandleGMVisibleCommand,           "", NULL },
-            { "",               SEC_MODERATOR,      false, &HandleGMCommand,                  "", NULL },
+            { "chat",          SEC_MODERATOR,      false, &HandleGMChatCommand,              "", NULL },
+            { "fly",           SEC_ADMINISTRATOR,  false, &HandleGMFlyCommand,               "", NULL },
+            { "ingame",        SEC_PLAYER,         true,  &HandleGMListIngameCommand,        "", NULL },
+            { "list",          SEC_ADMINISTRATOR,  true,  &HandleGMListFullCommand,          "", NULL },
+            { "visible",       SEC_MODERATOR,      false, &HandleGMVisibleCommand,           "", NULL },
+            { "",              SEC_MODERATOR,      false, &HandleGMCommand,                  "", NULL },
             { NULL,             0,                  false, NULL,                              "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "gm",             SEC_MODERATOR,      false, NULL,                     "", gmCommandTable },
+            { "gm",            SEC_MODERATOR,      false, NULL,                     "", gmCommandTable },
             { NULL,             0,                  false, NULL,                               "", NULL }
         };
         return commandTable;
@@ -161,7 +162,7 @@ public:
     static bool HandleGMListFullCommand(ChatHandler* handler, char const* /*args*/)
     {
         ///- Get the accounts with GM Level >0
-        QueryResult result = LoginDatabase.PQuery("SELECT a.username, aa.gmlevel FROM account a, account_access aa WHERE a.id=aa.id AND aa.gmlevel >= %u", SEC_MODERATOR);
+        QueryResult result = LoginDatabase.PQuery("SELECT a.username, aa.gmlevel FROM account a, account_access aa WHERE a.id=aa.id AND aa.gmlevel >= %u AND (aa.realmid = -1 OR aa.realmid = %u)", SEC_MODERATOR, realmID);
         if (result)
         {
             handler->SendSysMessage(LANG_GMLIST);

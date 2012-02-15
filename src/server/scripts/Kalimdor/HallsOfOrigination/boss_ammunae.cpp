@@ -135,7 +135,7 @@ class boss_ammunae : public CreatureScript
                 Trinity::AllCreaturesOfEntryInRange checker(me, entry, distance);
                 Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, pCreatureList, checker);
                 me->VisitNearbyObject(distance, searcher);
-                if(pCreatureList.empty())
+                if (pCreatureList.empty())
                     return;
 
                 std::list<Creature*>::iterator itr = pCreatureList.begin();
@@ -160,7 +160,7 @@ class boss_ammunae : public CreatureScript
                 if (!UpdateVictim())
                     return;
 
-                if (me->HasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
                 while(uint32 eventId = events.ExecuteEvent())
@@ -243,7 +243,7 @@ public:
                 if (!UpdateVictim())
                     return;
 
-                if (me->HasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
             if (SlashTimer <= diff)

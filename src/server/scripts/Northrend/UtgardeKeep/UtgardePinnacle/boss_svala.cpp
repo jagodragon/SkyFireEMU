@@ -101,10 +101,10 @@ enum SvalaPoint
 
 #define DATA_INCREDIBLE_HULK 2043
 
-static const float spectatorWP[2][3] = 
+static const float spectatorWP[2][3] =
 {
-    {296.95f,-312.76f,86.36f},
-    {297.69f,-275.81f,86.36f}
+    {296.95f,-312.76f, 86.36f},
+    {297.69f,-275.81f, 86.36f}
 };
 
 static Position ArthasPos = { 295.81f, -366.16f, 92.57f, 1.58f };
@@ -502,7 +502,6 @@ public:
             }
         }
     };
-
 };
 
 class npc_ritual_channeler : public CreatureScript
@@ -535,7 +534,7 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (me->HasUnitState(UNIT_STAT_CASTING))
+            if (me->HasUnitState(UNIT_STATE_CASTING))
                 return;
 
             if (paralyzeTimer <= diff)
@@ -573,7 +572,7 @@ public:
             if (motionType == POINT_MOTION_TYPE)
             {
                 if (pointId == 1)
-                    me->GetMotionMaster()->MovePoint(2,spectatorWP[1][0],spectatorWP[1][1],spectatorWP[1][2]);
+                    me->GetMotionMaster()->MovePoint(2, spectatorWP[1][0],spectatorWP[1][1],spectatorWP[1][2]);
                 else if (pointId == 2)
                     me->DespawnOrUnsummon(1000);
             }
@@ -663,7 +662,7 @@ public:
             if (mightyBlow <= diff)
             {
                 if (Unit* victim = me->getVictim())
-                    if (!victim->HasUnitState(UNIT_STAT_STUNNED))    // Prevent knocking back a ritual player
+                    if (!victim->HasUnitState(UNIT_STATE_STUNNED))    // Prevent knocking back a ritual player
                         DoCast(victim, SPELL_MIGHTY_BLOW);
                 mightyBlow = urand(12000, 17000);
             }

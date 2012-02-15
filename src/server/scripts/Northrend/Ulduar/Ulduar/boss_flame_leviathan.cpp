@@ -384,7 +384,7 @@ class boss_flame_leviathan : public CreatureScript
                     return;
                 }
 
-                if (me->HasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -425,7 +425,7 @@ class boss_flame_leviathan : public CreatureScript
                             break;
                         case EVENT_REPAIR:
                             me->MonsterTextEmote(EMOTE_REPAIR, 0, true);
-                            me->ClearUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
+                            me->ClearUnitState(UNIT_STATE_STUNNED | UNIT_STATE_ROOT);
                             events.ScheduleEvent(EVENT_SHUTDOWN, 150*IN_MILLISECONDS);
                             events.CancelEvent(EVENT_REPAIR);
                             break;
@@ -1225,7 +1225,7 @@ public:
     //bool OnGossipSelect(Player* player, Creature* creature, uint32 Sender, uint32 action)
     //{
     //    player->PlayerTalkClass->ClearMenus();
-    //    switch(action)
+    //    switch (action)
     //    {
     //        case GOSSIP_ACTION_INFO_DEF+1:
     //            if (player)
@@ -1266,7 +1266,7 @@ class go_ulduar_tower : public GameObjectScript
     public:
         go_ulduar_tower() : GameObjectScript("go_ulduar_tower") { }
 
-        void OnDestroyed(GameObject* go, Player* /*player*/,  uint32 /*value*/)
+        void OnDestroyed(GameObject* go, Player* /*player*/, uint32 /*value*/)
         {
             InstanceScript* instance = go->GetInstanceScript();
             if (!instance)
@@ -1575,7 +1575,7 @@ class spell_systems_shutdown : public SpellScriptLoader
                     return;
 
                 //! This could probably in the SPELL_EFFECT_SEND_EVENT handler too:
-                owner->AddUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
+                owner->AddUnitState(UNIT_STATE_STUNNED | UNIT_STATE_ROOT);
                 owner->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
                 owner->RemoveAurasDueToSpell(SPELL_GATHERING_SPEED);
             }
@@ -1679,7 +1679,7 @@ public:
         void FilterTargetsSubsequently(std::list<Unit*>& targets)
         {
             targets.clear();
-                if(_target)
+                if (_target)
                     targets.push_back(_target);
         }
 

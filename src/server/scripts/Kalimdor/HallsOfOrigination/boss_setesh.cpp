@@ -121,7 +121,7 @@ class boss_setesh : public CreatureScript
                 if (!UpdateVictim())
                     return;
 
-                if (me->HasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
                 while(uint32 eventId = events.ExecuteEvent())
@@ -266,7 +266,7 @@ public:
         {
             if (SummonTimer <= diff)
             {
-                uint8 summon = urand(0,1);
+                uint8 summon = urand(0, 1);
                 Summon(summon);
                 SummonTimer = 15000;
             } else SummonTimer -= diff;
@@ -325,7 +325,7 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (me->HasUnitState(UNIT_STAT_CASTING))
+            if (me->HasUnitState(UNIT_STATE_CASTING))
                 return;
 
             if (BarrierTimer <= diff)
@@ -380,7 +380,7 @@ public:
                 if (!UpdateVictim())
                     return;
 
-                if (me->HasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STATE_CASTING))
                     return;
 
             if (PrisonTimer <= diff)

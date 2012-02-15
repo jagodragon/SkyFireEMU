@@ -201,9 +201,9 @@ Position DeceiverLocations[3]=
 // Locations, where Shield Orbs will spawn
 float ShieldOrbLocations[4][2]=
 {
-    {1698.900f, 627.870f},    // middle pont of Sunwell
-    {12, 3.14f},             // First one spawns northeast of KJ
-    {12, 3.14f/0.7f},         // Second one spawns southeast
+    {1698.900f, 627.870f},   // middle pont of Sunwell
+    {12, 3.14f},            // First one spawns northeast of KJ
+    {12, 3.14f/0.7f},        // Second one spawns southeast
     {12, 3.14f*3.8f}          // Third one spawns (?)
 };
 
@@ -423,7 +423,7 @@ public:
         {
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            me->AddUnitState(UNIT_STAT_STUNNED);
+            me->AddUnitState(UNIT_STATE_STUNNED);
 
             ScriptedAI::InitializeAI();
         }

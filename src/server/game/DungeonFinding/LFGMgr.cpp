@@ -1167,7 +1167,7 @@ void LFGMgr::UpdateRoleCheck(uint64& gguid, uint64 guid /* = 0 */, uint8 roles /
         }
 
         m_QueueInfoMap[gguid] = pqInfo;
-        if(GetState(gguid) != LFG_STATE_NONE)
+        if (GetState(gguid) != LFG_STATE_NONE)
         {
             LfgGuidList& currentQueue = m_currentQueue[team];
             currentQueue.push_front(gguid);
@@ -1751,7 +1751,7 @@ void LFGMgr::TeleportPlayer(Player* player, bool out, bool fromOpcode /*= false*
         error = LFG_TELEPORTERROR_INVALID_LOCATION;
     else if (!player->isAlive())
         error = LFG_TELEPORTERROR_PLAYER_DEAD;
-    else if (player->IsFalling() || player->HasUnitState(UNIT_STAT_JUMPING))
+    else if (player->IsFalling() || player->HasUnitState(UNIT_STATE_JUMPING))
         error = LFG_TELEPORTERROR_FALLING;
     else
     {

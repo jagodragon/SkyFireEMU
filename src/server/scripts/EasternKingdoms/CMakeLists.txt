@@ -59,6 +59,12 @@ set(scripts_STAT_SRCS
   EasternKingdoms/GrimBatol/boss_general_umbriss.cpp
   EasternKingdoms/GrimBatol/instance_grim_batol.cpp  
   
+  EasternKingdoms/Gilneas/gilneas.cpp
+  EasternKingdoms/Gilneas/gilneas.h
+  EasternKingdoms/Gilneas/phase1.cpp
+  EasternKingdoms/Gilneas/phase2.cpp
+  EasternKingdoms/Gilneas/phase3.cpp
+  
   EasternKingdoms/BlackrockDepths/boss_high_interrogator_gerstahn.cpp
   EasternKingdoms/BlackrockDepths/boss_gorosh_the_dervish.cpp
   EasternKingdoms/BlackrockDepths/blackrock_depths.cpp
@@ -144,7 +150,6 @@ set(scripts_STAT_SRCS
   EasternKingdoms/BaradinHold/baradin_hold.h
   EasternKingdoms/BaradinHold/instance_baradin_hold.cpp
   EasternKingdoms/BaradinHold/boss_argaloth.cpp
-  EasternKingdoms/BaradinHold/boss_occuthar.cpp
   
   EasternKingdoms/BlackrockCaverns/blackrock_caverns.h
   EasternKingdoms/BlackrockCaverns/boss_ascendant_lord_obsidius.cpp
@@ -261,7 +266,6 @@ set(scripts_STAT_SRCS
   
   EasternKingdoms/Zones/ghostlands.cpp
   EasternKingdoms/Zones/eversong_woods.cpp
-  EasternKingdoms/Zones/gilneas.cpp
   EasternKingdoms/Zones/isle_of_queldanas.cpp
   EasternKingdoms/Zones/boss_kruul.cpp
   EasternKingdoms/Zones/searing_gorge.cpp

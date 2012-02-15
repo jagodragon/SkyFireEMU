@@ -18,7 +18,7 @@
 #include "ScriptPCH.h"
 #include "oculus.h"
 
-//Types of drake mounts: Ruby(Tank),  Amber(DPS),  Emerald(Healer)
+//Types of drake mounts: Ruby(Tank), Amber(DPS), Emerald(Healer)
 //Two Repeating phases
 
 enum Events
@@ -200,7 +200,7 @@ public:
 
             events.Update(diff);
 
-            if (me->HasUnitState(UNIT_STAT_CASTING))
+            if (me->HasUnitState(UNIT_STATE_CASTING))
                 return;
 
             while (uint32 eventId = events.ExecuteEvent())

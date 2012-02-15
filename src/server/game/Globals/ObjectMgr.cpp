@@ -4958,7 +4958,7 @@ void ObjectMgr::ValidateSpellScripts()
             bool valid = true;
             if (!spellScript && !auraScript)
             {
-                sLog->outError("TSCR: Functions GetSpellScript() and GetAuraScript() of script `%s` do not return objects - script skipped",  GetScriptName(sitr->second->second));
+                sLog->outError("TSCR: Functions GetSpellScript() and GetAuraScript() of script `%s` do not return objects - script skipped", GetScriptName(sitr->second->second));
                 valid = false;
             }
             if (spellScript)
@@ -8752,7 +8752,7 @@ void ObjectMgr::CheckScripts(ScriptsType type, std::set<int32>& ids)
                 case SCRIPT_COMMAND_TALK:
                 {
                     if (!GetTrinityStringLocale (itrM->second.Talk.TextID))
-                        sLog->outErrorDb("Table `db_script_string` not has string id  %u used db script (ID: %u)", itrM->second.Talk.TextID, itrMM->first);
+                        sLog->outErrorDb("Table `%s` references invalid text id %u from `db_script_string`, script id: %u.", GetScriptsTableNameByType(type).c_str(), itrM->second.Talk.TextID, itrMM->first);
 
                     if (ids.find(itrM->second.Talk.TextID) != ids.end())
                         ids.erase(itrM->second.Talk.TextID);

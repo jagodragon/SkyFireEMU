@@ -103,7 +103,7 @@ bool Map::ExistVMap(uint32 mapid, int gx, int gy)
     {
         if (vmgr->isMapLoadingEnabled())
         {
-            bool exists = vmgr->existsMap((sWorld->GetDataPath()+ "vmaps").c_str(),  mapid, gx, gy);
+            bool exists = vmgr->existsMap((sWorld->GetDataPath()+ "vmaps").c_str(), mapid, gx, gy);
             if (!exists)
             {
                 std::string name = vmgr->getDirFileName(mapid, gx, gy);
@@ -119,7 +119,7 @@ bool Map::ExistVMap(uint32 mapid, int gx, int gy)
 void Map::LoadVMap(int gx, int gy)
 {
                                                             // x and y are swapped !!
-    int vmapLoadResult = VMAP::VMapFactory::createOrGetVMapManager()->loadMap((sWorld->GetDataPath()+ "vmaps").c_str(),  GetId(), gx, gy);
+    int vmapLoadResult = VMAP::VMapFactory::createOrGetVMapManager()->loadMap((sWorld->GetDataPath()+ "vmaps").c_str(), GetId(), gx, gy);
     switch (vmapLoadResult)
     {
         case VMAP::VMAP_LOAD_RESULT_OK:
@@ -768,10 +768,10 @@ void Map::MoveAllCreaturesInMoveList()
     for (std::vector<Creature*>::iterator itr = _creaturesToMove.begin(); itr != _creaturesToMove.end(); ++itr)
     {
         Creature* c = *itr;
-        if(c->FindMap() != this) //pet is teleported to another map
+        if (c->FindMap() != this) //pet is teleported to another map
             continue;
 
-        if(c->_moveState != CREATURE_CELL_MOVE_ACTIVE)
+        if (c->_moveState != CREATURE_CELL_MOVE_ACTIVE)
         {
             c->_moveState = CREATURE_CELL_MOVE_NONE;
             continue;
@@ -1827,7 +1827,7 @@ bool Map::CheckGridIntegrity(Creature* c, bool moved) const
             c->GetGUIDLow(),
             c->GetPositionX(), c->GetPositionY(), (moved ? "final" : "original"),
             cur_cell.GridX(), cur_cell.GridY(), cur_cell.CellX(), cur_cell.CellY(),
-            xy_cell.GridX(),  xy_cell.GridY(),  xy_cell.CellX(),  xy_cell.CellY());
+            xy_cell.GridX(), xy_cell.GridY(), xy_cell.CellX(), xy_cell.CellY());
         return true;                                        // not crash at error, just output error in debug mode
     }
 
@@ -1865,7 +1865,7 @@ void Map::SendInitSelf(Player* player)
 {
     sLog->outDetail("Creating player data for himself %u", player->GetGUIDLow());
 
-    UpdateData data(player->GetMapId());
+    UpdateData data(GetId());
 
     // attach to player data current transport data
     if (Transport* transport = player->GetTransport())
@@ -1902,7 +1902,7 @@ void Map::SendInitTransports(Player* player)
     if (tmap.find(player->GetMapId()) == tmap.end())
         return;
 
-    UpdateData transData(player->GetMapId());
+    UpdateData transData(GetId());
 
     MapManager::TransportSet& tset = tmap[player->GetMapId()];
 
@@ -1929,7 +1929,7 @@ void Map::SendRemoveTransports(Player* player)
     if (tmap.find(player->GetMapId()) == tmap.end())
         return;
 
-    UpdateData transData(player->GetMapId());
+    UpdateData transData(GetId());
 
     MapManager::TransportSet& tset = tmap[player->GetMapId()];
 

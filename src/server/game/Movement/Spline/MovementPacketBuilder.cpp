@@ -1,19 +1,19 @@
 /*
+ * Copyright (C) 2010-2012 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "MovementPacketBuilder.h"
@@ -49,7 +49,7 @@ namespace Movement
         data << move_spline.spline.getPoint(move_spline.spline.first());
         data << move_spline.GetId();
 
-        switch(splineflags & MoveSplineFlag::Mask_Final_Facing)
+        switch (splineflags & MoveSplineFlag::Mask_Final_Facing)
         {
         default:
             data << uint8(MonsterMoveNormal);
@@ -99,7 +99,7 @@ namespace Movement
             Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
             Vector3 offset;
             // first and last points already appended
-            for(uint32 i = 1; i < last_idx; ++i)
+            for (uint32 i = 1; i < last_idx; ++i)
             {
                 offset = middle - real_path[i];
                 data.appendPackXYZ(offset.x, offset.y, offset.z);
@@ -141,7 +141,7 @@ namespace Movement
 
     void PacketBuilder::WriteCreate(const MoveSpline& move_spline, ByteBuffer& data)
     {
-        //WriteClientStatus(mov,data);
+        //WriteClientStatus(mov, data);
         //data.append<float>(&mov.m_float_values[SpeedWalk], SpeedMaxCount);
         //if (mov.SplineEnabled())
         {
@@ -157,7 +157,7 @@ namespace Movement
             {
                 data << move_spline.facing.target;
             }
-            else if(splineFlags.final_point)
+            else if (splineFlags.final_point)
             {
                 data << move_spline.facing.f.x << move_spline.facing.f.y << move_spline.facing.f.z;
             }
