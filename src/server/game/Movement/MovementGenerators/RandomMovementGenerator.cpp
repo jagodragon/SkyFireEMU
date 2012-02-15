@@ -99,9 +99,9 @@ void RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
     }
 
     if (is_air_ok)
-        i_nextMoveTime.Reset(0);
+        _nextMoveTime.Reset(0);
     else
-        i_nextMoveTime.Reset(urand(500, 10000));
+        _nextMoveTime.Reset(urand(500, 10000));
 
     creature.AddUnitState(UNIT_STATE_ROAMING_MOVE);
 
