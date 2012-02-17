@@ -25,7 +25,7 @@
 #include "DBCStructure.h"
 
 #include <ace/Singleton.h>
-#include "AuctionHouseBot/AuctionHouseBot.h
+#include "AuctionHouseBot/AuctionHouseBot.h"
 
 class Item;
 class Player;

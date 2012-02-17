@@ -24,7 +24,8 @@
 #include "Config.h"
 #include "ItemPrototype.h"
 #include "AuctionHouseMgr.h"
-
+class Config
+{};
 enum AuctionHouseType
 {
     AUCTION_HOUSE_ALLIANCE  = 0,

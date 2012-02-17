@@ -188,8 +188,8 @@ class AuctionBotBuyer : public AuctionBotAgent
         AuctionBotBuyer();
         ~AuctionBotBuyer();
 
-        bool        Initialize() override;
-        bool        Update(AuctionHouseType houseType) override;
+        bool        Initialize(); //override;
+        bool        Update(AuctionHouseType houseType);// override;
 
         void        LoadConfig();
         void        addNewAuctionBuyerBotBid(AHB_Buyer_Config& config);
@@ -217,8 +217,8 @@ class AuctionBotSeller : public AuctionBotAgent
         AuctionBotSeller();
         ~AuctionBotSeller();
 
-        bool Initialize() override;
-        bool Update(AuctionHouseType houseType) override;
+        bool Initialize()// override;
+        bool Update(AuctionHouseType houseType)// override;
 
         void addNewAuctions(AHB_Seller_Config& config);
         void SetItemsRatio(uint32 al, uint32 ho, uint32 ne);
@@ -235,7 +235,7 @@ class AuctionBotSeller : public AuctionBotAgent
         void        LoadSellerValues(AHB_Seller_Config& config);
         uint32      SetStat(AHB_Seller_Config& config);
         bool        getRandomArray( AHB_Seller_Config& config, RandomArray& ra, const std::vector<std::vector<uint32> >& addedItem  );
-        void        SetPricesOfItem(ItemPrototype const *itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality);
+        void        SetPricesOfItem(ItemTemplate const *itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality);
         void        LoadItemsQuantity(AHB_Seller_Config& config);
 };
 
@@ -564,7 +564,7 @@ uint32 AuctionBotBuyer::GetBuyableEntry(AHB_Buyer_Config& config)
         Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow);
         if (item)
         {
-            ItemPrototype const *prototype = item->GetProto();
+            ItemTemplate const *prototype = item->GetProto();
             if (prototype)
             {
                 ++config.SameItemInfo[item->GetEntry()].ItemCount;    // Structure constructor will make sure Element are correctly initialised if entry is created here.
@@ -816,7 +816,7 @@ void AuctionBotBuyer::addNewAuctionBuyerBotBid(AHB_Buyer_Config& config)
             continue;
         }
 
-        ItemPrototype const *prototype = item->GetProto();
+        ItemTemplate const *prototype = item->GetProto();
 
         uint32 BasePrice = sAuctionBotConfig.getConfig(CONFIG_BOOL_AHBOT_BUYPRICE_BUYER) ? prototype->BuyPrice : prototype->SellPrice;
         BasePrice *= item->GetCount();
@@ -1017,7 +1017,7 @@ bool AuctionBotSeller::Initialize()
     // BarGoLink bar(sItemStorage.MaxEntry);
     for (uint32 itemID = 0; itemID < sItemStorage.MaxEntry; ++itemID)
     {
-        ItemPrototype const* prototype = sObjectMgr->GetItemPrototype(itemID);
+        ItemTemplate const* prototype = sObjectMgr->GetItemTemplate(itemID);
 
         if (!prototype)
         {
@@ -1541,7 +1541,7 @@ uint32 AuctionBotSeller::SetStat(AHB_Seller_Config& config)
         Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow);
         if (item)
         {
-            ItemPrototype const *prototype = item->GetProto();
+            ItemTemplate const *prototype = item->GetProto();
             if (prototype)
             {
                 // sLog->outString("owner -> [%u]", Aentry->owner);
@@ -1628,7 +1628,7 @@ bool AuctionBotSeller::getRandomArray( AHB_Seller_Config& config, RandomArray& r
 }
 
 // Set items price. All important value are passed by address.
-void AuctionBotSeller::SetPricesOfItem(ItemPrototype const *itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality)
+void AuctionBotSeller::SetPricesOfItem(ItemTemplate const *itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality)
 {
     double temp_buyp = buyp * stackcnt *
         (itemQuality < MAX_AUCTION_QUALITY ? config.GetPriceRatioPerQuality(AuctionQuality(itemQuality)) : 1) ;
@@ -1758,7 +1758,7 @@ void AuctionBotSeller::addNewAuctions(AHB_Seller_Config& config)
             continue;
         }
 
-        ItemPrototype const* prototype = sObjectMgr->GetItemPrototype(itemID);
+        ItemTemplate const* prototype = sObjectMgr->GetItemTemplate(itemID);
         if (!prototype)
         {
             if(sAuctionBotConfig.getConfig(CONFIG_BOOL_AHBOT_DEBUG_SELLER))
@@ -1901,7 +1901,7 @@ void AuctionHouseBot::PrepareStatusInfos(AuctionHouseBotStatusInfo& statusInfo)
             AuctionEntry *Aentry = itr->second;
             if (Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow))
             {
-                ItemPrototype const *prototype = item->GetProto();
+                ItemTemplate const *prototype = item->GetProto();
                 if (Aentry->owner == 0)                         // Add only ahbot items
                 {
                     if (prototype->Quality < MAX_AUCTION_QUALITY)
