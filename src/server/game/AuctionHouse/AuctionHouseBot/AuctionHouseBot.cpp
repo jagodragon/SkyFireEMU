@@ -564,7 +564,7 @@ uint32 AuctionBotBuyer::GetBuyableEntry(AHB_Buyer_Config& config)
         Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow);
         if (item)
         {
-            ItemTemplate const *prototype = item->GetProto();
+            ItemTemplate const *prototype = item->GetTemplate();
             if (prototype)
             {
                 ++config.SameItemInfo[item->GetEntry()].ItemCount;    // Structure constructor will make sure Element are correctly initialised if entry is created here.
@@ -816,7 +816,7 @@ void AuctionBotBuyer::addNewAuctionBuyerBotBid(AHB_Buyer_Config& config)
             continue;
         }
 
-        ItemTemplate const *prototype = item->GetProto();
+        ItemTemplate const *prototype = item->GetTemplate();
 
         uint32 BasePrice = sAuctionBotConfig.getConfig(CONFIG_BOOL_AHBOT_BUYPRICE_BUYER) ? prototype->BuyPrice : prototype->SellPrice;
         BasePrice *= item->GetCount();
@@ -1541,7 +1541,7 @@ uint32 AuctionBotSeller::SetStat(AHB_Seller_Config& config)
         Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow);
         if (item)
         {
-            ItemTemplate const *prototype = item->GetProto();
+            ItemTemplate const *prototype = item->GetTemplate();
             if (prototype)
             {
                 // sLog->outString("owner -> [%u]", Aentry->owner);
@@ -1901,7 +1901,7 @@ void AuctionHouseBot::PrepareStatusInfos(AuctionHouseBotStatusInfo& statusInfo)
             AuctionEntry *Aentry = itr->second;
             if (Item *item = sAuctionMgr->GetAItem(Aentry->item_guidlow))
             {
-                ItemTemplate const *prototype = item->GetProto();
+                ItemTemplate const *prototype = item->GetTemplate();
                 if (Aentry->owner == 0)                         // Add only ahbot items
                 {
                     if (prototype->Quality < MAX_AUCTION_QUALITY)
