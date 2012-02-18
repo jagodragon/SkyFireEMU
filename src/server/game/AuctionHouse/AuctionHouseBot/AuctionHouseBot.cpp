@@ -250,7 +250,7 @@ AuctionBotConfig::AuctionBotConfig() : m_configFileName((std::string)"ahbot.conf
 
 bool AuctionBotConfig::Initialize()
 {
-    if (!m_AhBotCfg.SetSource(m_configFileName.c_str()))
+    if (!ConfigMgr::Load(m_configFileName.c_str()))
     {
         sLog->outString("AHBOT is Disabled. Unable to open configuration file(%s). ", m_configFileName.c_str());
         setConfig(CONFIG_UINT32_AHBOT_ALLIANCE_ITEM_AMOUNT_RATIO, 0);

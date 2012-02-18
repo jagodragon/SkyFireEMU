@@ -24,7 +24,7 @@
 #include "Config.h"
 #include "ItemPrototype.h"
 #include "AuctionHouseMgr.h"
-class Config
+/*class Config
 {
   friend class ACE_Singleton<Config, Ace_Null_Mutex>;
   //Config();
@@ -46,7 +46,7 @@ class Config
   private:
     std::string mFilename;
     ACE_Configuration_Heap *mConf;
-};
+};*/
 
 enum AuctionHouseType
 {
