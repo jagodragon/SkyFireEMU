@@ -431,7 +431,7 @@ void AuctionBotConfig::GetConfigFromFile()
 
 bool AuctionBotConfig::Reload()
 {
-    if (ConfigMgr::load())
+    if (ConfigMgr::Load())
     {
         GetConfigFromFile();
         return true;
