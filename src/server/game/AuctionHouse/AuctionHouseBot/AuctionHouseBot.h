@@ -71,7 +71,7 @@ enum AuctionQuality
 
 #define MAX_AUCTION_QUALITY 7
 
-enum AuctionBotConfigUInt32Values
+enum AuctionBotIntConfigs
 {
     CONFIG_UINT32_AHBOT_MAXTIME,
     CONFIG_UINT32_AHBOT_MINTIME,
@@ -130,7 +130,7 @@ enum AuctionBotConfigUInt32Values
     CONFIG_UINT32_AHBOT_UINT32_COUNT
 };
 
-enum AuctionBotConfigBoolValues
+enum AuctionBotBoolConfigs
 {
     CONFIG_BOOL_AHBOT_BUYER_ALLIANCE_ENABLED,
     CONFIG_BOOL_AHBOT_BUYER_HORDE_ENABLED,
@@ -160,23 +160,37 @@ class AuctionBotConfig
     public:
         AuctionBotConfig();
 
-        void        SetConfigFileName(char const* filename) { m_configFileName = filename; }
+        void        SetConfigFileName(char const* filename) {
+            m_configFileName = filename;
+        }
         bool        Initialize();
         const char* GetAHBotIncludes() const { return m_AHBotIncludes.c_str(); }
         const char* GetAHBotExcludes() const { return m_AHBotExcludes.c_str(); }
 
-        uint32      getConfig(AuctionBotConfigUInt32Values index) const { return m_configUint32Values[index]; }
-        bool        getConfig(AuctionBotConfigBoolValues index) const { return m_configBoolValues[index]; }
-        void        setConfig(AuctionBotConfigBoolValues index, bool value) { m_configBoolValues[index]=value; }
-        void        setConfig(AuctionBotConfigUInt32Values index, uint32 value) { m_configUint32Values[index]=value; }
+        uint32      getConfig(AuctionBotIntConfigs index) const {
+            return m_IntConfigs[index];
+        }
+        bool        getConfig(AuctionBotBoolConfigs index) const {
+            return m_BoolConfigs[index];
+        }
+        void        setConfig(AuctionBotBoolConfigs index, bool value) {
+            m_BoolConfigs[index]=value;
+        }
+        void        setConfig(AuctionBotIntConfigs index, uint32 value) {
+            m_IntConfigs[index]=value;
+        }
 
         uint32 getConfigItemAmountRatio(AuctionHouseType houseType) const;
         bool getConfigBuyerEnabled(AuctionHouseType houseType) const;
         uint32 getConfigItemQualityAmount(AuctionQuality quality) const;
 
 
-        uint32      GetItemPerCycleBoost() const { return m_ItemsPerCycleBoost; }
-        uint32      GetItemPerCycleNormal() const { return m_ItemsPerCycleNormal; }
+        uint32      GetItemPerCycleBoost() const {
+            return m_ItemsPerCycleBoost;
+        }
+        uint32      GetItemPerCycleNormal() const {
+            return m_ItemsPerCycleNormal;
+        }
         bool        Reload();
 
         static char const* GetItemClassName(ItemClass itemclass);
@@ -186,20 +200,24 @@ class AuctionBotConfig
         std::string m_configFileName;
         std::string m_AHBotIncludes;
         std::string m_AHBotExcludes;
-        Config      m_AhBotCfg;
+        //Config      m_AhBotCfg;
         uint32      m_ItemsPerCycleBoost;
         uint32      m_ItemsPerCycleNormal;
 
-        uint32 m_configUint32Values[CONFIG_UINT32_AHBOT_UINT32_COUNT];
-        bool   m_configBoolValues[CONFIG_UINT32_AHBOT_BOOL_COUNT];
+        uint32 m_IntConfigs[CONFIG_UINT32_AHBOT_UINT32_COUNT];
+        bool   m_BoolConfigs[CONFIG_UINT32_AHBOT_BOOL_COUNT];
 
-        void SetAHBotIncludes(const std::string& AHBotIncludes) { m_AHBotIncludes = AHBotIncludes; }
-        void SetAHBotExcludes(const std::string& AHBotExcludes) { m_AHBotExcludes = AHBotExcludes; }
+        void SetAHBotIncludes(const std::string& AHBotIncludes) {
+            m_AHBotIncludes = AHBotIncludes;
+        }
+        void SetAHBotExcludes(const std::string& AHBotExcludes) {
+            m_AHBotExcludes = AHBotExcludes;
+        }
 
-        void setConfig(AuctionBotConfigUInt32Values index, char const* fieldname, uint32 defvalue);
-        void setConfigMax(AuctionBotConfigUInt32Values index, char const* fieldname, uint32 defvalue, uint32 maxvalue);
-        void setConfigMinMax(AuctionBotConfigUInt32Values index, char const* fieldname, uint32 defvalue, uint32 minvalue, uint32 maxvalue);
-        void setConfig(AuctionBotConfigBoolValues index, char const* fieldname, bool defvalue);
+        void setConfig(AuctionBotIntConfigs index, char const* fieldname, uint32 defvalue);
+        void setConfigMax(AuctionBotIntConfigs index, char const* fieldname, uint32 defvalue, uint32 maxvalue);
+        void setConfigMinMax(AuctionBotIntConfigs index, char const* fieldname, uint32 defvalue, uint32 minvalue, uint32 maxvalue);
+        void setConfig(AuctionBotBoolConfigs index, char const* fieldname, bool defvalue);
         void GetConfigFromFile();
 };
 
